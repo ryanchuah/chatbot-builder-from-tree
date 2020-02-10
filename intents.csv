@@ -1,0 +1,10 @@
+id,name,dataType,name
+78867125-c2d8-43d6-bfec-d24c52223ae3,Default Welcome Intent,,
+22fbf951-40fe-438b-b043-630e1953c518,User Name,@sys.person,person
+cb59007b-0b6c-4cd5-96a4-d6fe277f75a4,Contact Name,@sys.person,person
+2075fead-477a-422c-8575-61611f4e80d3,Contact Email,@sys.email,email
+f98bb29e-f5f6-4c91-8761-8b0a51d08eec,Contact Phone Number,@sys.phone-number,phone-number
+5d70177e-528a-4ad0-bcb5-ce6904092926,Organisation Name,@sys.any,any
+8860fa17-4807-4ed4-a9ea-204b0deb796a,Organisation Address,@sys.address,address
+e7aa7563-74c0-4bc6-9132-d88e3818a9a1,Is MD,@confirmation,confirmation
+d375c466-f735-4555-b9c1-753526cd488e,Knows Classfication,@confirmation,confirmation
