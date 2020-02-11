@@ -2,8 +2,6 @@ import csv
 from uuid import uuid4
 import json
 from collections import deque
-import pyperclip
-
 
 QUESTION = 0
 YES = 1
@@ -48,20 +46,6 @@ class CreateJsonData:
             "output_context": None
         })
 
-    def handle_yes_no(self, queue_head, answer_index, visited, input_context):
-
-        curr_row = self.csv_data[queue_head["index"]]
-        if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
-            self.queue.append({
-                "index": queue_head["index"] + int(curr_row[answer_index]),
-                "output_context": curr_row[IDENTIFIER]
-            })
-            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, False)
-            self.result_data.append(temp_intent_json)
-        else:
-            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, True)
-            self.result_data.append(temp_intent_json)
-
     def bfs(self):
         while self.queue:
             visited = set()
@@ -74,12 +58,18 @@ class CreateJsonData:
 
         return self.result_data
 
-    def speech_value(self, queue_head, answer_index, is_terminal):
+    def handle_yes_no(self, queue_head, answer_index, visited, input_context):
         curr_row = self.csv_data[queue_head["index"]]
-        if is_terminal:
-            return f"Your MD belongs to {curr_row[answer_index]}"
+        if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
+            self.queue.append({
+                "index": queue_head["index"] + int(curr_row[answer_index]),
+                "output_context": curr_row[IDENTIFIER]
+            })
+            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, False)
+            self.result_data.append(temp_intent_json)
         else:
-            return self.csv_data[queue_head["index"] + int(curr_row[answer_index])]
+            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, True)
+            self.result_data.append(temp_intent_json)
 
     def intent_json(self, queue_head, answer_index, input_context=None, is_terminal=False):
         speech_value = self.speech_value(queue_head, answer_index, is_terminal)
@@ -133,8 +123,15 @@ class CreateJsonData:
             "condition": "",
             "conditionalFollowupEvents": []
         }
-        
+
         return data
+
+    def speech_value(self, queue_head, answer_index, is_terminal):
+        curr_row = self.csv_data[queue_head["index"]]
+        if is_terminal:
+            return f"Your MD belongs to {curr_row[answer_index]}"
+        else:
+            return self.csv_data[queue_head["index"] + int(curr_row[answer_index])]
 
 
 if __name__ == '__main__':
