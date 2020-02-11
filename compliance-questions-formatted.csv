@@ -1,6 +1,6 @@
 Questions,Yes,No,Unique Identifier
 Does the MD not touch patient or contact only intact skin?,Class I,1 Line down,not touch patient
-Does the MD involve chanelling or storing for eventual administration?,1 Line down,3 Lines down,channeling for administration
+Does the MD involve channelling or storing for eventual administration?,1 Line down,3 Lines down,channeling for administration
 "Is the MD to be used with blood, other bodily fluids, organs or tissues?",Class IIa,1 Line down,used with blood
 May the MD be connected to an active medical device in Class IIa or higher?,Class I,Class IIa,connected to active medical device
 "Does the MD modify biological or chemical composition of blood, body liquids, or other liquids intended for infusion?",1 Line down,2 Lines down,modify biological composition

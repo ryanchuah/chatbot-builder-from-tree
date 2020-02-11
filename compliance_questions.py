@@ -2,6 +2,7 @@ import csv
 from uuid import uuid4
 import json
 from collections import deque
+from usersays_data import welcome_usersays_data, yes_usersays_data, no_usersays_data
 
 QUESTION = 0
 YES = 1
@@ -35,18 +36,20 @@ class CSVData:
 
 
 class CreateJsonData:
-    result_data = []
-    count = 0
 
     def __init__(self, data):
         self.csv_data = data
+        self.result_json_data = []
+
+        self.result_yes_or_no = []
         self.queue = deque()
         self.queue.append({
             "index": 0,
-            "output_context": None
+            "output_context": None,
+            "prev_was_yes_or_no": None
         })
 
-    def bfs(self):
+    def walk_tree(self):
         while self.queue:
             visited = set()
             queue_head = self.queue.popleft()
@@ -56,20 +59,21 @@ class CreateJsonData:
             self.handle_yes_no(queue_head, YES, visited, input_context)
             self.handle_yes_no(queue_head, NO, visited, input_context)
 
-        return self.result_data
+        return self.result_json_data
 
     def handle_yes_no(self, queue_head, answer_index, visited, input_context):
         curr_row = self.csv_data[queue_head["index"]]
         if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer_index]),
-                "output_context": curr_row[IDENTIFIER]
+                "output_context": curr_row[IDENTIFIER],
+                "prev_was_yes_or_no": True if answer_index == YES else False
             })
             temp_intent_json = self.intent_json(queue_head, answer_index, input_context, False)
-            self.result_data.append(temp_intent_json)
         else:
             temp_intent_json = self.intent_json(queue_head, answer_index, input_context, True)
-            self.result_data.append(temp_intent_json)
+        self.result_json_data.append(temp_intent_json)
+        self.result_yes_or_no.append(queue_head["prev_was_yes_or_no"])
 
     def intent_json(self, queue_head, answer_index, input_context=None, is_terminal=False):
         speech_value = self.speech_value(queue_head, answer_index, is_terminal)
@@ -134,9 +138,37 @@ class CreateJsonData:
             return self.csv_data[queue_head["index"] + int(curr_row[answer_index])]
 
 
-if __name__ == '__main__':
+class CreateJsonFiles:
     data = CSVData()
     create_json_data = CreateJsonData(data.csv_data("./test.csv"))
-    json_list = create_json_data.bfs()
-    print(len(json_list))
-    print(json.dumps(json_list))
+    json_list = create_json_data.walk_tree()
+    yes_or_no_list = create_json_data.result_yes_or_no
+
+    def create_intent_files(self):
+
+        for index in range(len(self.json_list)):
+            curr_name = self.json_list[index]["name"]
+            with open(f"./target/{curr_name}.json", "w", encoding="utf-8") as file:
+                json.dump(self.json_list[index], file, indent=2)
+
+            with open(f"./target/{curr_name}_usersays_en.json", "w", encoding="utf-8") as file:
+                if index == 0:
+                    json.dump(welcome_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] == True:
+                    json.dump(yes_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] == False:
+                    json.dump(no_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] is None:
+                    pass
+                else:
+                    raise Exception("Error in code")
+
+
+if __name__ == '__main__':
+    # data = CSVData()
+    # create_json_data = CreateJsonData(data.csv_data("./test.csv"))
+    # json_list = create_json_data.walk_tree()
+    # print(len(json_list))
+    # print(json.dumps(json_list))
+    create_json_files = CreateJsonFiles()
+    create_json_files.create_intent_files()
