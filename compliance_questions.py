@@ -39,51 +39,62 @@ class CSVData:
 class CreateJsonData:
     result_data = []
     count = 0
-    def bfs(self, data, start=0):
-        queue = deque()
-        queue.append({
-            "index": start,
+
+    def __init__(self, data):
+        self.csv_data = data
+        self.queue = deque()
+        self.queue.append({
+            "index": 0,
             "output_context": None
         })
 
-        while queue:
+    def handle_yes_no(self, queue_head, answer_index, visited, input_context):
+
+        curr_row = self.csv_data[queue_head["index"]]
+        if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
+            self.queue.append({
+                "index": queue_head["index"] + int(curr_row[answer_index]),
+                "output_context": curr_row[IDENTIFIER]
+            })
+            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, False)
+            self.result_data.append(temp_intent_json)
+        else:
+            temp_intent_json = self.intent_json(queue_head, answer_index, input_context, True)
+            self.result_data.append(temp_intent_json)
+
+    def bfs(self):
+        while self.queue:
             visited = set()
-            queue_head = queue.popleft()
-            curr_index = queue_head["index"]
-            print(curr_index)
-            curr_row = data[curr_index]
+            queue_head = self.queue.popleft()
             input_context = queue_head["output_context"]
-            visited.add(curr_index)
+            visited.add(queue_head["index"])
 
-            if curr_row[YES].isdigit() and curr_index+int(curr_row[YES]) not in visited:
-                queue.append({
-                    "index": curr_index + int(curr_row[YES]),
-                    "output_context": curr_row[IDENTIFIER]
-                })
-            else:
-                self.result_data.append(self.intent_json(curr_row, YES, input_context))
+            self.handle_yes_no(queue_head, YES, visited, input_context)
+            self.handle_yes_no(queue_head, NO, visited, input_context)
 
-            if curr_row[NO].isdigit() and curr_index+int(curr_row[NO]) not in visited:
-                queue.append({
-                    "index": curr_index + int(curr_row[NO]),
-                    "output_context": curr_row[IDENTIFIER]
-                })
-            else:
-                self.result_data.append(self.intent_json(curr_row, NO, input_context))
         return self.result_data
 
+    def speech_value(self, queue_head, answer_index, is_terminal):
+        curr_row = self.csv_data[queue_head["index"]]
+        if is_terminal:
+            return f"Your MD belongs to {curr_row[answer_index]}"
+        else:
+            return self.csv_data[queue_head["index"] + int(curr_row[answer_index])]
 
-    def intent_json(self, row, answer_index, input_context=None):
+    def intent_json(self, queue_head, answer_index, input_context=None, is_terminal=False):
+        speech_value = self.speech_value(queue_head, answer_index, is_terminal)
+        curr_row = self.csv_data[queue_head["index"]]
+
         data = {
             "id": str(uuid4()),
-            "name": row[IDENTIFIER].title(),
+            "name": curr_row[IDENTIFIER].title(),
             "auto": True,
             "contexts": input_context,
             "responses": [{
                 "resetContexts": False,
                 "affectedContexts": [
                     {
-                        "name": row[IDENTIFIER].replace(" ", ""),
+                        "name": curr_row[IDENTIFIER].replace(" ", ""),
                         "parameters": {},
                         "lifespan": 1
                     }
@@ -107,7 +118,7 @@ class CreateJsonData:
                         "type": 0,
                         "lang": "en",
                         "condition": "",
-                        "speech": f"Your MD belongs to {row[answer_index]}"
+                        "speech": speech_value
                     }
                 ],
                 "defaultResponsePlatforms": {},
@@ -128,7 +139,7 @@ class CreateJsonData:
 
 if __name__ == '__main__':
     data = CSVData()
-    create_json_data = CreateJsonData()
-    json_list = create_json_data.bfs(data.csv_data("./test.csv"))
+    create_json_data = CreateJsonData(data.csv_data("./test.csv"))
+    json_list = create_json_data.bfs()
     print(len(json_list))
     print(json.dumps(json_list))
