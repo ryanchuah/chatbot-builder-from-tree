@@ -1,6 +1,6 @@
 Questions,Yes,No,Unique Identifier
 Does the MD not touch patient or contact only intact skin?,Class I,1 Line down,not touch patient
-Does the MD involve chanelling or storing for eventual administration?,1 Line down,3 Lines down,channeling for administration
+Does the MD involve channelling or storing for eventual administration?,1 Line down,3 Lines down,channeling for administration
 "Is the MD to be used with blood, other bodily fluids, organs or tissues?",Class IIa,1 Line down,used with blood
 May the MD be connected to an active medical device in Class IIa or higher?,Class I,Class IIa,connected to active medical device
 "Does the MD modify biological or chemical composition of blood, body liquids, or other liquids intended for infusion?",1 Line down,2 Lines down,modify biological composition
@@ -9,46 +9,46 @@ May the MD be connected to an active medical device in Class IIa or higher?,Clas
 Is the MD intended for wounds which breach dermis and heal only by secondary intent?,Class IIb,1 Line down,wounds which breach dermis
 "Yes, is the MD intended to manage micro-environment of wounds + others?",Class IIa,Class I,manage micro-environments
 Is the MD invasive in body orifice or stoma (not surgically)?,1 Line down,7 Lines down,invasive in body orifice
-is the MD for trancient use?,Class I,1 Line down,trancient use
-is the MD for short-term use?,1 Line down,2 Lines down,Short-term use
-"is the MD only for use in oral cavity, ear canal, or in nasal cavity?",Class I,Class IIa,"oral cavity, ear canal"
-is the MD for long-term use?,1 Line down,2 Lines down,Long-term use
-"is the MD only for use in oral cavity, ear canal, or in nasal cavity and is not liable to be absorbed by the mucous membrane?",Class IIa,Class IIb,"oral cavity, ear canal, not liable to be absorbed"
-is the MD to be connected to an active medical device in Class IIa or higher?,Class IIa,1 Line down,connected to active medical device (2)
+Is the MD for trancient use?,Class I,1 Line down,trancient use
+Is the MD for short-term use?,1 Line down,2 Lines down,Short-term use
+"Is the MD only for use in oral cavity, ear canal, or in nasal cavity?",Class I,Class IIa,"oral cavity, ear canal"
+Is the MD for long-term use?,1 Line down,2 Lines down,Long-term use
+"Is the MD only for use in oral cavity, ear canal, or in nasal cavity and is not liable to be absorbed by the mucous membrane?",Class IIa,Class IIb,"oral cavity, ear canal, not liable to be absorbed"
+Is the MD to be connected to an active medical device in Class IIa or higher?,Class IIa,1 Line down,connected to active medical device (2)
 Is the MD surgically invasive and for trancient use?,1 Line down,7 Lines down,surgically invasive
-is the MD specifically to control/diagnose/monitor/correct a defect of heart or central circulatory system through direct contact?,Class III,1 Line down,"control, diagnose, monitor or correct"
-is the MD or use in direct contact with the central nervous systerm?,Class III,1 Line down,direct contact with CNS
-is the MD a reusable surgical instrument?,Class I,1 Line down,reusable surgical instrument
-does the MD supply energy or ionising radiation?,Class IIb,1 Line down,supply energy
-"does the MD have a biological effect, ie it is mainly or wholly absorbed?",Class IIb,1 Line down,have a biological effect
-is the MD intended to administer medicine in a potentially hazardous manner?,Class IIb,Class IIa,administer medicine
+Is the MD specifically to control/diagnose/monitor/correct a defect of heart or central circulatory system through direct contact?,Class III,1 Line down,"control, diagnose, monitor or correct"
+Is the MD or use in direct contact with the central nervous systerm?,Class III,1 Line down,direct contact with CNS
+Is the MD a reusable surgical instrument?,Class I,1 Line down,reusable surgical instrument
+Does the MD supply energy or ionising radiation?,Class IIb,1 Line down,supply energy
+"Does the MD have a biological effect, ie it is mainly or wholly absorbed?",Class IIb,1 Line down,have a biological effect
+Is the MD intended to administer medicine in a potentially hazardous manner?,Class IIb,Class IIa,administer medicine
 Is the MD surgically invasive and for short-term use?,1 Line down,6 Lines down,surgically invasive and short-term use
-is the MD for use in direct contact with the central nervous system?,Class III,1 Line down,direct contact with CNS (2)
-is the MD specifically used to monitor/control/diagnose/correct defect of heart or central circulatory system by direct contact?,Class III,1 Line down,"monitor, control, diagnose or correct"
-does the MD supply energy or ionising radiation?,Class IIb,1 Line down,supply energy (2)
-does the MD have a biological effect or is mainly absorbed?,Class III,1 Line down,have a biological effect (2)
-"does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth)?",Class IIb,Class IIa,undergo chemical change
+Is the MD for use in direct contact with the central nervous system?,Class III,1 Line down,direct contact with CNS (2)
+Is the MD specifically used to monitor/control/diagnose/correct defect of heart or central circulatory system by direct contact?,Class III,1 Line down,"monitor, control, diagnose or correct"
+Does the MD supply energy or ionising radiation?,Class IIb,1 Line down,supply energy (2)
+Does the MD have a biological effect or is mainly absorbed?,Class III,1 Line down,have a biological effect (2)
+"Does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth)?",Class IIb,Class IIa,undergo chemical change
 "Is the MD surgically invasive, for long term use, or is an implantable device?",1 Line down,6 Lines down,"surgically invasive, long term use"
-is the MD to be used in teeth?,Class IIa,1 Line down,used in teeth
-is the MD to be used in direct contact with heart or central nervous/circulatory system?,Class III,1 Line down,direct contact with heart
-does the MD have a biological effect or is mainly absorbed?,Class III,1 Line down,have a biological effect or mainly absorbed
-"does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth",Class III,1 Line down,undergo chemical change or administer medicine
-"is the MD for use in breast implants, or hip, knee, or shoulder joint replacements?",Class III,Class IIb,use in breast implants
+Is the MD to be used in teeth?,Class IIa,1 Line down,used in teeth
+Is the MD to be used in direct contact with heart or central nervous/circulatory system?,Class III,1 Line down,direct contact with heart
+Does the MD have a biological effect or is mainly absorbed?,Class III,1 Line down,have a biological effect or mainly absorbed
+"Does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth",Class III,1 Line down,undergo chemical change or administer medicine
+"Is the MD for use in breast implants, or hip, knee, or shoulder joint replacements?",Class III,Class IIb,use in breast implants
 Is the MD an active therapeutic device intended to administer or exchange energy?,1 Line down,3 Lines down,active therapeutic device
-does the MD administer or exchange energy in a potentially hazardous way?,Class IIb,1 Line down,administer or exchange energy
-"does the MD control, monitor, or influence directly the performance of a Class IIb active therapeutic device?",Class IIb,Class IIa,"control, monitor or influence"
+Does the MD administer or exchange energy in a potentially hazardous way?,Class IIb,1 Line down,administer or exchange energy
+"Does the MD control, monitor, or influence directly the performance of a Class IIb active therapeutic device?",Class IIb,Class IIa,"control, monitor or influence"
 "Is the MD an active device for diagnosis intended to supply energy to image in vivo distribution of radiopharmaceuticals, or for direct diagnosis or monitoring of vital physiological processes?",1 Line down,3 Lines down,supply energy to image in vivo
-is the MD specifically intended to monitor vital physiological parameters where variations could result in immediate danger?,Class IIb,1 Line down,monitor vital physiological parameters
-does the MD emit ionizing radiation and is intended for diagnostic and therapeutic interventional radiology?,Class IIb,Class IIa,emit ionizing radiation
+Is the MD specifically intended to monitor vital physiological parameters where variations could result in immediate danger?,Class IIb,1 Line down,monitor vital physiological parameters
+Does the MD emit ionizing radiation and is intended for diagnostic and therapeutic interventional radiology?,Class IIb,Class IIa,emit ionizing radiation
 Is the MD an active device to administer or remove medicines and other substances to or from the body?,1 Line down,2 Lines down,active device to administer medicines
-does the MD do so in a potentially hazardous way?,Class IIb,Class IIa,potentially hazardous
+Does the MD do so in a potentially hazardous way?,Class IIb,Class IIa,potentially hazardous
 Is the MD an active medical device but is not classified by any of the above rules?,Class I,1 Line down,active device not classified
 Does the MD incorporate integral medicinal substances liable to act in an ancillary way on the human body?,Class III,1 Line down,incorporate integral medicinal substances
 Is the MD used for contraception or prevention of sexually transmitted diseases?,1 Line down,2 Lines down,contraception
-is the MD implantable or is long-term invasive?,Class III,Class IIb,implantable
+Is the MD implantable or is long-term invasive?,Class III,Class IIb,implantable
 Is the MD specifically to be used for disinfecting MDs?,1 Line down,3 Lines down,disinfecting Mds
-"is the MD specifically to be used for disinfecting, cleaning, rinsing or hydrating contact lenses?",Class IIb,1 Line down,disinfecting contact lenses
-is the MD specifically to be used for disinfecting invasive MDs?,Class IIb,Class IIa,disinfecting invasive Mds
+"Is the MD specifically to be used for disinfecting, cleaning, rinsing or hydrating contact lenses?",Class IIb,1 Line down,disinfecting contact lenses
+Is the MD specifically to be used for disinfecting invasive MDs?,Class IIb,Class IIa,disinfecting invasive Mds
 Is the MD intended for recording of X-ray diagnostic images?,Class IIa,1 Line down,recording of X-ray
 Does the MD utilize non-viable animal tissues or derivatives (not devices in contact with only intact skin)?,Class III,1 Line down,Non-viable animal tissues
 Is the MD a blood bag?,Class IIb,Error,blood bag

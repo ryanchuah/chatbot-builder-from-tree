@@ -92,11 +92,15 @@ class CreateIntentsData:
 
 class CreateChatbotFiles:
     data = CSVData()
-    create_intents = CreateIntentsData(data.csv_data("./compliance-questions-formatted.csv"))
+    create_intents = CreateIntentsData(data.csv_data("./questions-formatted.csv"))
     create_intents.walk_tree()
     intents_list = create_intents.result_json_data
     yes_or_no_list = create_intents.result_yes_or_no
     target_path = "./target/chatbot"
+
+    def __init__(self):
+        if os.path.exists("./target"):
+            shutil.rmtree("./target")
 
     def create_intent_files(self):
         usersays = Usersays()
@@ -142,16 +146,6 @@ class CreateChatbotFiles:
 
 
     def create_zip_file(self):
-        # with ZipFile(f"{self.target_path}/chatbot.zip", 'w') as zipObj:
-        #     # Iterate over all the files in directory
-        #     # zipObj.write(self.target_path)
-        #     for folderName, subfolders, filenames in os.walk(self.target_path):
-        #         print(folderName)
-        #         for filename in filenames:
-        #             # create complete filepath of file in directory
-        #             filePath = os.path.join(folderName, filename)
-        #             # Add file to zip
-        #             zipObj.write(filePath)
         shutil.make_archive(f"./target/chatbot", "zip", self.target_path)
 
     def create_chatbot_files(self):
@@ -162,7 +156,6 @@ class CreateChatbotFiles:
         self.create_zip_file()
 
 
-
 if __name__ == '__main__':
-    create_intent_files = CreateChatbotFiles()
-    create_intent_files.create_chatbot_files()
+    create_chatbot_files = CreateChatbotFiles()
+    create_chatbot_files.create_chatbot_files()

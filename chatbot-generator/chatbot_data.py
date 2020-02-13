@@ -100,7 +100,7 @@ class Intents:
     def speech_value(self, queue_head, answer_index, is_terminal):
         curr_row = self.csv_data[queue_head["index"]]
         if is_terminal:
-            return f"Your MD belongs to {curr_row[answer_index]}"
+            return f"{curr_row[answer_index]}"
         else:
             return self.csv_data[queue_head["index"] + int(curr_row[answer_index])][QUESTION]
 
