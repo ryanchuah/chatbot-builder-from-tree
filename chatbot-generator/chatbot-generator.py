@@ -59,8 +59,7 @@ class CreateIntentsData:
         self.queue = deque()
         self.queue.append({
             "index": 0,
-            "output_context": "DefaultWelcomeIntent-followup",
-            "prev_was_yes_or_no": None
+            "output_context": "DefaultWelcomeIntent-followup"
         })
 
     def walk_tree(self):
@@ -100,7 +99,6 @@ class CreateIntentsData:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer_index]),
                 "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "prev_was_yes_or_no": True if answer_index == YES else False
             })
             temp_intent_json = self.intents.intent_json(queue_head, input_context, False, answer_index)
         else:

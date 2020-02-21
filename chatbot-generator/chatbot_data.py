@@ -115,19 +115,19 @@ class Intents:
         else:
             name = curr_row[IDENTIFIER].title() + " - " + ("Yes" if answer_index == YES else "No")
             parameters = [
-                    {
-                        "id": str(uuid4()),
-                        "required": True,
-                        "dataType": "@confirmation",
-                        "name": "confirmation",
-                        "value": "$confirmation",
-                        "promptMessages": [],
-                        "noMatchPromptMessages": [],
-                        "noInputPromptMessages": [],
-                        "outputDialogContexts": [],
-                        "isList": False
-                    }
-                ]
+                {
+                    "id": str(uuid4()),
+                    "required": True,
+                    "dataType": "@confirmation",
+                    "name": "confirmation",
+                    "value": "$confirmation",
+                    "promptMessages": [],
+                    "noMatchPromptMessages": [],
+                    "noInputPromptMessages": [],
+                    "outputDialogContexts": [],
+                    "isList": False
+                }
+            ]
         data = {
             "id": str(uuid4()),
             "name": name,
@@ -456,6 +456,7 @@ class Usersays:
             "updated": 0
         }
     ]
+
 
 class Agent:
     agent_data = {
