@@ -1,3 +1,5 @@
 Questions,Yes,No,Unique Identifier
+What is your name?,,,name
+What is your email?,,,email
 Do you like Asian food?,1 line down,Eat some pasta,asian food
 Do you like Chinese food?,Eat some dumplings,Eat some ramen,chinese food

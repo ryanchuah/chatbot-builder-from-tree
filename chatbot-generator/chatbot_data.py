@@ -99,30 +99,22 @@ class Intents:
 
     def speech_value(self, queue_head, answer_index, is_terminal):
         curr_row = self.csv_data[queue_head["index"]]
+        if answer_index is None:
+            return curr_row[QUESTION]
         if is_terminal:
             return f"{curr_row[answer_index]}"
         else:
             return self.csv_data[queue_head["index"] + int(curr_row[answer_index])][QUESTION]
 
-    def intent_json(self, queue_head, answer_index, input_context=None, is_terminal=False):
+    def intent_json(self, queue_head, input_context=None, is_terminal=False, answer_index=None):
         speech = self.speech_value(queue_head, answer_index, is_terminal)
         curr_row = self.csv_data[queue_head["index"]]
-
-        data = {
-            "id": str(uuid4()),
-            "name": curr_row[IDENTIFIER].title() + " - " + ("Yes" if answer_index == YES else "No"),
-            "auto": True,
-            "contexts": [] if input_context is None else [input_context],
-            "responses": [{
-                "resetContexts": False,
-                "affectedContexts": [
-                    {
-                        "name": curr_row[IDENTIFIER].replace(" ", "-"),
-                        "parameters": {},
-                        "lifespan": 1
-                    }
-                ],
-                "parameters": [
+        if answer_index is None:
+            name = curr_row[IDENTIFIER].title()
+            parameters = []
+        else:
+            name = curr_row[IDENTIFIER].title() + " - " + ("Yes" if answer_index == YES else "No")
+            parameters = [
                     {
                         "id": str(uuid4()),
                         "required": True,
@@ -135,7 +127,22 @@ class Intents:
                         "outputDialogContexts": [],
                         "isList": False
                     }
+                ]
+        data = {
+            "id": str(uuid4()),
+            "name": name,
+            "auto": True,
+            "contexts": [] if input_context is None else [input_context],
+            "responses": [{
+                "resetContexts": False,
+                "affectedContexts": [
+                    {
+                        "name": curr_row[IDENTIFIER].replace(" ", "-"),
+                        "parameters": {},
+                        "lifespan": 1
+                    }
                 ],
+                "parameters": parameters,
                 "messages": [
                     {
                         "type": 0,
@@ -449,7 +456,6 @@ class Usersays:
             "updated": 0
         }
     ]
-
 
 class Agent:
     agent_data = {

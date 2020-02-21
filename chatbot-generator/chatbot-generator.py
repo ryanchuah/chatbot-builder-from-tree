@@ -4,7 +4,7 @@ import re
 import json
 from collections import deque
 from pathlib import Path
-# from zipfile import ZipFile
+
 import shutil
 from chatbot_data import Intents, Entities, Usersays, Agent, PackageJson
 
@@ -72,20 +72,39 @@ class CreateIntentsData:
             if queue_head["index"] not in visited:
                 visited.add(queue_head["index"])
 
-                self.handle_yes_no(queue_head, YES, visited, input_context)
-                self.handle_yes_no(queue_head, NO, visited, input_context)
+                if self.yes_no_is_empty(queue_head):
+                    self.handle_yes_no(queue_head, visited, input_context)
+                else:
+                    self.handle_yes_no(queue_head, visited, input_context, YES)
+                    self.handle_yes_no(queue_head, visited, input_context, NO)
 
-    def handle_yes_no(self, queue_head, answer_index, visited, input_context):
+    def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
+        if curr_row[YES] == '' and curr_row[NO] == '':
+            return True
+        return False
+
+    def handle_yes_no(self, queue_head, visited, input_context, answer_index=None):
+        curr_row = self.csv_data[queue_head["index"]]
+        if answer_index is None:
+            self.queue.append({
+                "index": queue_head["index"] + 1,
+                "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
+            })
+            temp_intent_json = self.intents.intent_json(queue_head, input_context, False)
+            self.result_json_data.append(temp_intent_json)
+            self.result_yes_or_no.append("N/A")
+            return
+
         if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer_index]),
                 "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
                 "prev_was_yes_or_no": True if answer_index == YES else False
             })
-            temp_intent_json = self.intents.intent_json(queue_head, answer_index, input_context, False)
+            temp_intent_json = self.intents.intent_json(queue_head, input_context, False, answer_index)
         else:
-            temp_intent_json = self.intents.intent_json(queue_head, answer_index, input_context, True)
+            temp_intent_json = self.intents.intent_json(queue_head, input_context, True, answer_index)
         self.result_json_data.append(temp_intent_json)
         self.result_yes_or_no.append(True if answer_index == YES else False)
 
@@ -120,10 +139,12 @@ class CreateChatbotFiles:
                     json.dump(usersays.yes_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] == False:
                     json.dump(usersays.no_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] == "N/A":
+                    json.dump([], file, indent=2)
                 elif self.yes_or_no_list[index] is None:
                     json.dump(usersays.welcome_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] is not None:
-                    raise SystemError("Error in code")
+                    raise RuntimeError("Error in internal code")
 
     def create_entity_files(self):
         entities = Entities()
@@ -143,7 +164,6 @@ class CreateChatbotFiles:
         package_json = PackageJson
         with open(f"{self.target_path}/package.json", "w", encoding="utf-8") as file:
             json.dump(package_json.package_json_data, file, indent=2)
-
 
     def create_zip_file(self):
         shutil.make_archive(f"./target/chatbot", "zip", self.target_path)
