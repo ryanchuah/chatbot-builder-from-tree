@@ -109,30 +109,32 @@ class CreateIntentsData:
 
 class CreateChatbotFiles:
     data = CSVData()
-    create_intents = CreateIntentsData(data.csv_data("./questions-formatted.csv"))
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, "questions-formatted.csv")
+    create_intents = CreateIntentsData(data.csv_data(filename))
     create_intents.walk_tree()
     intents_list = create_intents.result_json_data
     yes_or_no_list = create_intents.result_yes_or_no
-    target_path = "./target/chatbot"
+    target_path = os.path.join(dirname, "target", "chatbot")
 
     def __init__(self):
-        if os.path.exists("./target"):
-            shutil.rmtree("./target")
+        if os.path.exists(os.path.join(self.dirname, "target")):
+            shutil.rmtree(os.path.join(self.dirname, "target"))
 
     def create_intent_files(self):
         usersays = Usersays()
-
-        Path(f"{self.target_path}/intents").mkdir(parents=True, exist_ok=True)
-        with open(f"{self.target_path}/intents/Default Fallback Intent.json", "w", encoding="utf-8") as file:
+        Path(os.path.join(self.target_path, "intents")).mkdir(parents=True, exist_ok=True)
+        with open(os.path.join(self.target_path, "intents", "Default Fallback Intent.json"), "w",
+                  encoding="utf-8") as file:
             json.dump(Intents.fallback_intent, file, indent=2)
 
         for index in range(len(self.intents_list)):
             curr_name = self.intents_list[index]["name"]
-
-            with open(f"{self.target_path}/intents/{curr_name}.json", "w", encoding="utf-8") as file:
+            with open(os.path.join(self.target_path, "intents", f"{curr_name}.json"), "w", encoding="utf-8") as file:
                 json.dump(self.intents_list[index], file, indent=2)
 
-            with open(f"{self.target_path}/intents/{curr_name}_usersays_en.json", "w", encoding="utf-8") as file:
+            with open(os.path.join(self.target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
+                      encoding="utf-8") as file:
                 if self.yes_or_no_list[index] == True:
                     json.dump(usersays.yes_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] == False:
@@ -146,25 +148,28 @@ class CreateChatbotFiles:
 
     def create_entity_files(self):
         entities = Entities()
-        Path(f"{self.target_path}/entities").mkdir(parents=True, exist_ok=True)
-        with open(f"{self.target_path}/entities/confirmation.json", "w", encoding="utf-8") as file:
+
+        Path(os.path.join(self.target_path, "entities")).mkdir(parents=True, exist_ok=True)
+
+        with open(os.path.join(self.target_path, "entities", "confirmation.json"), "w", encoding="utf-8") as file:
             json.dump(entities.confirmation_entity, file, indent=2)
 
-        with open(f"{self.target_path}/entities/confirmation_entries_en.json", "w", encoding="utf-8") as file:
+        with open(os.path.join(self.target_path, "entities", "confirmation_entries_en.json"), "w",
+                  encoding="utf-8") as file:
             json.dump(entities.confirmation_entries, file, indent=2)
 
     def create_agent_file(self):
         agent = Agent()
-        with open(f"{self.target_path}/agent.json", "w", encoding="utf-8") as file:
+        with open(os.path.join(self.target_path, "agent.json"), "w", encoding="utf-8") as file:
             json.dump(agent.agent_data, file, indent=2)
 
     def create_package_json_file(self):
         package_json = PackageJson
-        with open(f"{self.target_path}/package.json", "w", encoding="utf-8") as file:
+        with open(os.path.join(self.target_path, "package.json"), "w", encoding="utf-8") as file:
             json.dump(package_json.package_json_data, file, indent=2)
 
     def create_zip_file(self):
-        shutil.make_archive(f"./target/chatbot", "zip", self.target_path)
+        shutil.make_archive(self.target_path, "zip", self.target_path)
 
     def create_chatbot_files(self):
         self.create_intent_files()
