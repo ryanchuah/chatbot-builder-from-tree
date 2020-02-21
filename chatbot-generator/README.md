@@ -1,8 +1,10 @@
-# Dialogflow Chatbot Generator (from yes-no decision tree)
+# Dialogflow Chatbot Generator (from decision tree)
 This script generates an agent zip file that can be directly
 imported into DialogFlow. 
 
-## CSV File
+
+## Getting Started
+### CSV File
 The CSV file represents a decision tree. The flow of the conversation will
 be determined through this decision tree.
 The first line of the CSV file must contain the following header:
@@ -10,19 +12,24 @@ The first line of the CSV file must contain the following header:
     Questions,Yes,No,Unique Identifier
     
 **Questions**: The question to prompt the user with  
-**Yes**: What the chatbot should reply with if the user replied with *yes*  
-**No**: What the chatbot should reply with if the user replied with *no*  
-**Unique Identifier**: A unique short (~3-8 words) text that uniquely identifies each question  
+**Yes** (Optional): What the chatbot should reply with if the user replied with *yes*.   
+**No** (Optional): What the chatbot should reply with if the user replied with *no*  
+**_If Yes and No are left blank, it indicates that the flow of the conversation should move to the next line of the CSV file 
+regardless of what a user inputs. If you choose to do this, you must
+manually specify training phrases in your DialogFlow Agent_**  
+**Unique Identifier**: A unique short (~1-8 words) text that uniquely identifies each question  
 
 The following is an example of a decision tree and its corresponding CSV file  
 
-![alt text](https://res.cloudinary.com/cyhiee123/image/upload/v1581628099/Decision_Tree_lfuwei.png "Food Decision Tree")
+![Decision Tree](https://res.cloudinary.com/cyhiee123/image/upload/v1582307849/Decision_Tree_wlwjdp.png "Food Decision Tree")
 
     Questions,Yes,No,Unique Identifier
+    What is your name?,,,name
+    What is your email?,,,email
     Do you like Asian food?,1 line down,Eat some pasta,asian food
     Do you like Chinese food?,Eat some dumplings,Eat some ramen,chinese food
     
-## How to run script
+### How to run script
 1. Update the *questions-formatted.csv* file provided in the root directory
 2. In your terminal, navigate to the root directory of the chatbot generator
 3. Run `python3 chatbot-generator.py` to generate the agent files. This will generate a *target* folder
@@ -31,7 +38,7 @@ imported directly into DialogFlow, and the *chatbot* folder contains the files a
 directories in the zip file (this folder can be ignored)
 
 
-## How to import into DialogFlow
+### How to import into DialogFlow
 1. Log in to your DialogFlow account then create a new agent
 2. Navigate to agent settings then navigate to *Export and Import*
 3. Click *Restore from zip* then select the *chatbot.zip* file that
@@ -40,3 +47,9 @@ button.
 **Warning: If you are using a preexisting agent, this step will 
 replace the current agent version with a new one. All the 
 intents and entities in the older version will be deleted.**
+
+## Author
+* [Ryan Chuah](https://github.com/ryanchuah/)
+
+## License
+This project is licensed under the MIT License- see the [LICENSE.md](LICENSE.md) file for details
