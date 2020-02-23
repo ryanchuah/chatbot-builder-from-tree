@@ -103,7 +103,10 @@ class Intents:
     def speech_value(self, queue_head, answer_index, is_terminal):
         curr_row = self.csv_data[queue_head["index"]]
         if answer_index is None:
-            return curr_row[QUESTION]
+            question = curr_row[QUESTION]
+            if not question:
+                raise ValueError("Question field in CSV file cannot be left blank")
+            return question
         if is_terminal:
             return f"{curr_row[answer_index]}"
         else:

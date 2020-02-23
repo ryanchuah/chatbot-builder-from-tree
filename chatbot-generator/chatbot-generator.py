@@ -9,7 +9,6 @@ import shutil
 from chatbot_data import Intents, Entities, Usersays, Agent, PackageJson, AgentAPI
 
 WEBHOOK_USED = True  # change this value depending on whether webhooks/fulfillment will be used
-QUESTION = 0
 YES = 1
 NO = 2
 IDENTIFIER = 3
@@ -17,7 +16,8 @@ IDENTIFIER = 3
 class CSVData:
 
     def format_possible_offset(self, string):
-        # if string is "1 Line below", will return "1". If string is "Class 1", will return "Class 1"
+        # if string is "1 Line below", will return "1".
+        # if string is "You are unhealthy", will return "You are unhealthy"
         s = string.split(" ", 1)
         if s[0].isdigit():
             return s[0]
@@ -39,11 +39,17 @@ class CSVData:
             csv_reader = csv.reader(csv_file, delimiter=',')
 
             next(csv_reader, None)  # skip header during iteration
-
+            identifiers = set()
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
                 row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)
+                if not row[IDENTIFIER]:
+                    raise ValueError("Identifier field in CSV file cannot be left blank")
+                elif row[IDENTIFIER] in identifiers:
+                    raise ValueError("Two or more identifiers in CSV file are equal. Identifiers must be unique.")
+
+                identifiers.add(row[IDENTIFIER])
                 data.append(row)
 
             return data
@@ -77,6 +83,7 @@ class CreateIntentsData:
                     self.handle_yes_no(queue_head, visited, input_context, YES)
                     self.handle_yes_no(queue_head, visited, input_context, NO)
 
+        # append fallback_intent to back of lists
         self.result_json_data.append(self.intents.fallback_intent)
         self.result_yes_or_no.append(None)
 
