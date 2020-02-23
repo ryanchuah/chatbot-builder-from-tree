@@ -1,4 +1,5 @@
 from uuid import uuid4
+import os
 
 QUESTION = 0
 YES = 1
@@ -7,54 +8,10 @@ IDENTIFIER = 3
 
 
 class Intents:
-    fallback_intent = {
-        "id": "9332f025-2acd-4b98-9fd9-1c0a823a158a",
-        "name": "Default Fallback Intent",
-        "auto": True,
-        "contexts": [],
-        "responses": [
-            {
-                "resetContexts": False,
-                "action": "input.unknown",
-                "affectedContexts": [],
-                "parameters": [],
-                "messages": [
-                    {
-                        "type": 0,
-                        "lang": "en",
-                        "condition": "",
-                        "speech": [
-                            "I didn\u0027t get that. Can you say it again?",
-                            "I missed what you said. What was that?",
-                            "Sorry, could you say that again?",
-                            "Sorry, can you say that again?",
-                            "Can you say that again?",
-                            "Sorry, I didn\u0027t get that. Can you rephrase?",
-                            "Sorry, what was that?",
-                            "One more time?",
-                            "What was that?",
-                            "Say that one more time?",
-                            "I didn\u0027t get that. Can you repeat?",
-                            "I missed that, say that again?"
-                        ]
-                    }
-                ],
-                "defaultResponsePlatforms": {},
-                "speech": []
-            }
-        ],
-        "priority": 500000,
-        "webhookUsed": False,
-        "webhookForSlotFilling": False,
-        "fallbackIntent": True,
-        "events": [],
-        "conditionalResponses": [],
-        "condition": "",
-        "conditionalFollowupEvents": []
-    }
 
-    def __init__(self, csv_data):
+    def __init__(self, csv_data, webhook_used):
         self.csv_data = csv_data
+        self.webhook_used = webhook_used
         self.welcome_intent = {
             "id": str(uuid4()),
             "name": "Default Welcome Intent",
@@ -67,7 +24,7 @@ class Intents:
                         {
                             "name": "DefaultWelcomeIntent-followup",
                             "parameters": {},
-                            "lifespan": 2
+                            "lifespan": 1
                         }
                     ],
                     "parameters": [],
@@ -84,7 +41,7 @@ class Intents:
                 }
             ],
             "priority": 500000,
-            "webhookUsed": True,
+            "webhookUsed": webhook_used,
             "webhookForSlotFilling": False,
             "fallbackIntent": False,
             "events": [
@@ -92,6 +49,52 @@ class Intents:
                     "name": "WELCOME"
                 }
             ],
+            "conditionalResponses": [],
+            "condition": "",
+            "conditionalFollowupEvents": []
+        }
+
+        self.fallback_intent = {
+            "id": "9332f025-2acd-4b98-9fd9-1c0a823a158a",
+            "name": "Default Fallback Intent",
+            "auto": True,
+            "contexts": [],
+            "responses": [
+                {
+                    "resetContexts": False,
+                    "action": "input.unknown",
+                    "affectedContexts": [],
+                    "parameters": [],
+                    "messages": [
+                        {
+                            "type": 0,
+                            "lang": "en",
+                            "condition": "",
+                            "speech": [
+                                "I didn\u0027t get that. Can you say it again?",
+                                "I missed what you said. What was that?",
+                                "Sorry, could you say that again?",
+                                "Sorry, can you say that again?",
+                                "Can you say that again?",
+                                "Sorry, I didn\u0027t get that. Can you rephrase?",
+                                "Sorry, what was that?",
+                                "One more time?",
+                                "What was that?",
+                                "Say that one more time?",
+                                "I didn\u0027t get that. Can you repeat?",
+                                "I missed that, say that again?"
+                            ]
+                        }
+                    ],
+                    "defaultResponsePlatforms": {},
+                    "speech": []
+                }
+            ],
+            "priority": 500000,
+            "webhookUsed": webhook_used,
+            "webhookForSlotFilling": False,
+            "fallbackIntent": True,
+            "events": [],
             "conditionalResponses": [],
             "condition": "",
             "conditionalFollowupEvents": []
@@ -155,7 +158,7 @@ class Intents:
                 "speech": []
             }],
             "priority": 500000,
-            "webhookUsed": False,
+            "webhookUsed": self.webhook_used,
             "webhookForSlotFilling": False,
             "fallbackIntent": False,
             "events": [],
@@ -459,59 +462,149 @@ class Usersays:
 
 
 class Agent:
-    agent_data = {
-        "description": "",
-        "language": "en",
-        "shortDescription": "",
-        "examples": "",
-        "linkToDocs": "",
-        "disableInteractionLogs": False,
-        "disableStackdriverLogs": True,
-        "googleAssistant": {
-            "googleAssistantCompatible": False,
-            "project": "testing-auto-create-neojhe",
-            "welcomeIntentSignInRequired": False,
-            "startIntents": [],
-            "systemIntents": [],
-            "endIntentIds": [],
-            "oAuthLinking": {
-                "required": False,
-                "providerId": "",
-                "authorizationUrl": "",
-                "tokenUrl": "",
-                "scopes": "",
-                "privacyPolicyUrl": "",
-                "grantType": "AUTH_CODE_GRANT"
+    def __init__(self, webhook_used):
+        self.webhook_used = webhook_used
+
+        if self.webhook_used:
+            self.webhook_data = {
+                "url": "https://your-webhook-api.com",
+                "username": "",
+                "headers": {
+                    "": ""
+                },
+                "available": True,
+                "useForDomains": False,
+                "cloudFunctionsEnabled": False,
+                "cloudFunctionsInitialized": False
+            }
+        else:
+            self.webhook_data = {
+                "url": "",
+                "username": "",
+                "headers": {},
+                "available": False,
+                "useForDomains": False,
+                "cloudFunctionsEnabled": False,
+                "cloudFunctionsInitialized": False
+            }
+
+        self.agent_data = {
+            "description": "Automatically Generated Agent",
+            "language": "en",
+            "shortDescription": "Automatically Generated Agent",
+            "examples": "",
+            "linkToDocs": "",
+            "disableInteractionLogs": False,
+            "disableStackdriverLogs": True,
+            "googleAssistant": {
+                "googleAssistantCompatible": False,
+                "project": "testing-auto-create-neojhe",
+                "welcomeIntentSignInRequired": False,
+                "startIntents": [],
+                "systemIntents": [],
+                "endIntentIds": [],
+                "oAuthLinking": {
+                    "required": False,
+                    "providerId": "",
+                    "authorizationUrl": "",
+                    "tokenUrl": "",
+                    "scopes": "",
+                    "privacyPolicyUrl": "",
+                    "grantType": "AUTH_CODE_GRANT"
+                },
+                "voiceType": "MALE_1",
+                "capabilities": [],
+                "env": "",
+                "protocolVersion": "V2",
+                "autoPreviewEnabled": False,
+                "isDeviceAgent": False
             },
-            "voiceType": "MALE_1",
-            "capabilities": [],
-            "env": "",
-            "protocolVersion": "V2",
-            "autoPreviewEnabled": False,
-            "isDeviceAgent": False
-        },
-        "defaultTimezone": "Africa/Casablanca",
-        "webhook": {
-            "url": "",
-            "username": "",
-            "headers": {},
-            "available": False,
-            "useForDomains": False,
-            "cloudFunctionsEnabled": False,
-            "cloudFunctionsInitialized": False
-        },
-        "isPrivate": True,
-        "customClassifierMode": "use.after",
-        "mlMinConfidence": 0.3,
-        "supportedLanguages": [],
-        "onePlatformApiVersion": "v2",
-        "analyzeQueryTextSentiment": False,
-        "enabledKnowledgeBaseNames": [],
-        "knowledgeServiceConfidenceAdjustment": -0.4,
-        "dialogBuilderMode": False,
-        "baseActionPackagesUrl": ""
-    }
+            "defaultTimezone": "Africa/Casablanca",
+            "webhook": self.webhook_data,
+            "isPrivate": True,
+            "customClassifierMode": "use.after",
+            "mlMinConfidence": 0.3,
+            "supportedLanguages": [],
+            "onePlatformApiVersion": "v2",
+            "analyzeQueryTextSentiment": False,
+            "enabledKnowledgeBaseNames": [],
+            "knowledgeServiceConfidenceAdjustment": -0.4,
+            "dialogBuilderMode": False,
+            "baseActionPackagesUrl": ""
+        }
 
 
 class PackageJson:
     package_json_data = {"version": "1.0.0"}
+
+
+class AgentAPI:
+    # agent.js code
+    code = \
+        """
+        "use strict";
+        const express = require("express");
+        const router = express.Router();
+
+        var mongoUtil = require("../../mongoUtil");
+        var db = mongoUtil.getDbData();
+        const { WebhookClient } = require("dialogflow-fulfillment");
+        const info = {};
+        var currentUsername;
+        process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
+        """
+
+    def handler_function(self, intent):
+        agent_add_definition = ""
+        if isinstance(intent['responses'][0]['messages'][0]['speech'], list):
+            for speech in intent['responses'][0]['messages'][0]['speech']:
+                agent_add_definition += f'\tagent.add("{speech}"){os.linesep}'
+        else:
+            agent_add_definition = f'\tagent.add("{intent["responses"][0]["messages"][0]["speech"]}"){os.linesep}'
+        return (
+            f"function handle{intent['name'].replace(' ', '').replace('-', '')}(agent) {{{os.linesep}"
+            f"{agent_add_definition}"
+            f"}}{os.linesep}"
+        )
+
+    def intent_map(self, intent):
+        return f'intentMap.set("{intent["name"]}", handle{intent["name"].replace(" ", "").replace("-", "")});{os.linesep}'
+
+    def agent_code(self, intents_list):
+        code = \
+            """
+                "use strict";
+                const express = require("express");
+                const router = express.Router();
+                
+                var mongoUtil = require("../../mongoUtil");
+                var db = mongoUtil.getDbData();
+                const { WebhookClient } = require("dialogflow-fulfillment");
+                const info = {};
+                var currentUsername;
+                process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
+                router.post("/", async (request, response) => {
+                  const agent = new WebhookClient({ request, response });
+                  console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
+                  console.log("Dialogflow Request body: " + JSON.stringify(request.body));
+            """
+        for intent in intents_list:
+            code += self.handler_function(intent)
+
+        code += \
+            """
+              // Run the proper function handler based on the matched Dialogflow intent name
+              let intentMap = new Map();
+            """
+
+        for intent in intents_list:
+            code += self.intent_map(intent)
+
+        code += \
+            """
+              agent.handleRequest(intentMap);
+            });
+            
+            module.exports = router;
+            """
+        return code

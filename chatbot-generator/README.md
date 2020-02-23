@@ -36,6 +36,10 @@ The following is an example of a decision tree and its corresponding CSV file
 containing a *chatbot.zip* file and a *chatbot* folder. The zip file will be 
 imported directly into DialogFlow, and the *chatbot* folder contains the files and
 directories in the zip file (this folder can be ignored)
+4. If you plan to utilise webhooks/fulfillment, then in *chatbot-generator.py*,
+change the value of `WEBHOOK_USED` to `True`. This will generate the same chatbot files as in step 3,
+but will automatically enable Fulfillment in the chatbot files generated and will generate an additional
+*agent.js* file in the *target* folder. This file can be used as boilerplate for your webhook server.
 
 
 ### How to import into DialogFlow

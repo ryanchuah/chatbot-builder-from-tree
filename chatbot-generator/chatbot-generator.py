@@ -6,13 +6,13 @@ from collections import deque
 from pathlib import Path
 
 import shutil
-from chatbot_data import Intents, Entities, Usersays, Agent, PackageJson
+from chatbot_data import Intents, Entities, Usersays, Agent, PackageJson, AgentAPI
 
+WEBHOOK_USED = True  # change this value depending on whether webhooks/fulfillment will be used
 QUESTION = 0
 YES = 1
 NO = 2
 IDENTIFIER = 3
-
 
 class CSVData:
 
@@ -53,7 +53,7 @@ class CreateIntentsData:
 
     def __init__(self, data):
         self.csv_data = data
-        self.intents = Intents(self.csv_data)
+        self.intents = Intents(self.csv_data, WEBHOOK_USED)
         self.result_json_data = [self.intents.welcome_intent]
         self.result_yes_or_no = [None]
         self.queue = deque()
@@ -76,6 +76,9 @@ class CreateIntentsData:
                 else:
                     self.handle_yes_no(queue_head, visited, input_context, YES)
                     self.handle_yes_no(queue_head, visited, input_context, NO)
+
+        self.result_json_data.append(self.intents.fallback_intent)
+        self.result_yes_or_no.append(None)
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
@@ -115,7 +118,7 @@ class CreateChatbotFiles:
     create_intents.walk_tree()
     intents_list = create_intents.result_json_data
     yes_or_no_list = create_intents.result_yes_or_no
-    target_path = os.path.join(dirname, "target", "chatbot")
+    chatbot_target_path = os.path.join(dirname, "target", "chatbot")
 
     def __init__(self):
         if os.path.exists(os.path.join(self.dirname, "target")):
@@ -123,17 +126,17 @@ class CreateChatbotFiles:
 
     def create_intent_files(self):
         usersays = Usersays()
-        Path(os.path.join(self.target_path, "intents")).mkdir(parents=True, exist_ok=True)
-        with open(os.path.join(self.target_path, "intents", "Default Fallback Intent.json"), "w",
+        Path(os.path.join(self.chatbot_target_path, "intents")).mkdir(parents=True, exist_ok=True)
+        with open(os.path.join(self.chatbot_target_path, "intents", "Default Fallback Intent.json"), "w",
                   encoding="utf-8") as file:
-            json.dump(Intents.fallback_intent, file, indent=2)
+            json.dump(self.intents_list[len(self.intents_list)-1], file, indent=2)
 
         for index in range(len(self.intents_list)):
             curr_name = self.intents_list[index]["name"]
-            with open(os.path.join(self.target_path, "intents", f"{curr_name}.json"), "w", encoding="utf-8") as file:
+            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}.json"), "w", encoding="utf-8") as file:
                 json.dump(self.intents_list[index], file, indent=2)
 
-            with open(os.path.join(self.target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
+            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
                       encoding="utf-8") as file:
                 if self.yes_or_no_list[index] == True:
                     json.dump(usersays.yes_usersays_data, file, indent=2)
@@ -149,27 +152,32 @@ class CreateChatbotFiles:
     def create_entity_files(self):
         entities = Entities()
 
-        Path(os.path.join(self.target_path, "entities")).mkdir(parents=True, exist_ok=True)
+        Path(os.path.join(self.chatbot_target_path, "entities")).mkdir(parents=True, exist_ok=True)
 
-        with open(os.path.join(self.target_path, "entities", "confirmation.json"), "w", encoding="utf-8") as file:
+        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation.json"), "w", encoding="utf-8") as file:
             json.dump(entities.confirmation_entity, file, indent=2)
 
-        with open(os.path.join(self.target_path, "entities", "confirmation_entries_en.json"), "w",
+        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation_entries_en.json"), "w",
                   encoding="utf-8") as file:
             json.dump(entities.confirmation_entries, file, indent=2)
 
     def create_agent_file(self):
-        agent = Agent()
-        with open(os.path.join(self.target_path, "agent.json"), "w", encoding="utf-8") as file:
+        agent = Agent(WEBHOOK_USED)
+        with open(os.path.join(self.chatbot_target_path, "agent.json"), "w", encoding="utf-8") as file:
             json.dump(agent.agent_data, file, indent=2)
 
     def create_package_json_file(self):
-        package_json = PackageJson
-        with open(os.path.join(self.target_path, "package.json"), "w", encoding="utf-8") as file:
+        package_json = PackageJson()
+        with open(os.path.join(self.chatbot_target_path, "package.json"), "w", encoding="utf-8") as file:
             json.dump(package_json.package_json_data, file, indent=2)
 
     def create_zip_file(self):
-        shutil.make_archive(self.target_path, "zip", self.target_path)
+        shutil.make_archive(self.chatbot_target_path, "zip", self.chatbot_target_path)
+
+    def create_agent_api_file(self):
+        agent_api = AgentAPI()
+        with open(os.path.join(self.dirname, "target", "agent.js"), "w", encoding="utf-8") as file:
+            file.write(agent_api.agent_code(self.intents_list))
 
     def create_chatbot_files(self):
         self.create_intent_files()
@@ -177,6 +185,8 @@ class CreateChatbotFiles:
         self.create_agent_file()
         self.create_package_json_file()
         self.create_zip_file()
+        if WEBHOOK_USED:
+            self.create_agent_api_file()
 
 
 if __name__ == '__main__':
