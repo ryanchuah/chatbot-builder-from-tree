@@ -100,27 +100,21 @@ class Intents:
             "conditionalFollowupEvents": []
         }
 
-    def speech_value(self, queue_head, answer_index):
+    def speech_value(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
 
-        if answer_index is None:
-            question = curr_row[QUESTION]
-            if not question:
-                raise ValueError("Question field in CSV file cannot be left blank")
-            return question
+        if queue_head["prev_yes_or_no"] is None:
+            return curr_row[QUESTION]
+        answer = curr_row[queue_head["prev_yes_or_no"]]
+        if answer.isdigit():
+            return self.csv_data[queue_head["index"] + int(answer)][QUESTION]
         else:
-            if curr_row[answer_index].isdigit():
-                return self.csv_data[queue_head["index"] + int(curr_row[answer_index])][QUESTION]
-            return curr_row[answer_index]
+            return answer
 
     def intent_json(self, queue_head, input_context=None):
 
         curr_row = self.csv_data[queue_head["index"]]
-        if queue_head["value"] is not None:
-            speech = queue_head["value"]
-        else:
-            speech = self.speech_value(queue_head, queue_head["prev_yes_or_no"])
-
+        speech = self.speech_value(queue_head)
         if queue_head["prev_yes_or_no"] is None:
             name = curr_row[IDENTIFIER].title()
             parameters = []

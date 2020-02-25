@@ -1,8 +1,8 @@
 Questions,Yes,No,Unique Identifier
-What’s your name?,,,user name
-What is the name of the contact person in your organization?,,,contact name
-What is their email address?,,,contact email
-What is their phone number?,,,contact phone
+What’s your name?,,,name
+What is the name of the contact person in your organization?,,,contact person name
+What is their email address?,,,email address
+What is their phone number?,,,phone number
 What is your organisation's name,,,organisation name
 What is your organisation's address?,,,organisation address
 Do you know which class of Medical Device your software belongs to according to MHRA rules?,Great! You’re all set!,1 Line down,know class of medical device
