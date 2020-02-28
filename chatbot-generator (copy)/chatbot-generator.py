@@ -14,6 +14,7 @@ YES = 1
 NO = 2
 IDENTIFIER = 3
 
+
 class CSVData:
 
     def format_possible_offset(self, string):
@@ -41,6 +42,7 @@ class CSVData:
 
             next(csv_reader, None)  # skip header during iteration
             identifiers = set()
+            index = 0
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
@@ -51,8 +53,12 @@ class CSVData:
                     raise ValueError("Two or more identifiers in CSV file are equal. Identifiers must be unique.")
 
                 identifiers.add(row[IDENTIFIER])
+                if index > 0:
+                    row.append(data[index - 1][IDENTIFIER])
+                else:
+                    row.append(None)
+                index += 1
                 data.append(row)
-
             return data
 
 
@@ -61,80 +67,84 @@ class CreateIntentsData:
     def __init__(self, data):
         self.csv_data = data
         self.intents = Intents(self.csv_data, WEBHOOK_USED)
-        # self.result_json_data = [self.intents.welcome_intent]
-        # self.result_yes_no = [None]
         self.result_json_data = []
         self.result_yes_no = []
         self.queue = deque()
         self.queue.append({
             "index": 0,
             "input_context": None,
+            "curr_yes_or_no": None,
             "prev_yes_or_no": None,
+            "output_context": f"{self.csv_data[0][IDENTIFIER]}-initial"
         })
 
     def walk_tree(self):
         visited = set()
         while self.queue:
-            print(self.queue)
             queue_head = self.queue.popleft()
             if self.queue_head_hash(queue_head) not in visited:
                 visited.add(self.queue_head_hash(queue_head))
 
-                input_context = queue_head["input_context"]
                 curr_row = self.csv_data[queue_head["index"]]
+
                 if self.yes_no_is_empty(queue_head):
                     self.queue.append({
                         "index": queue_head["index"] + 1,
-                        "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
+                        "input_context": queue_head["output_context"],
+                        "curr_yes_or_no": None,
                         "prev_yes_or_no": None,
+                        "output_context": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial"
                     })
                 else:
                     if curr_row[YES].isdigit():
                         self.queue.append({
                             "index": queue_head["index"] + int(curr_row[YES]),
-                            "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                            "prev_yes_or_no": YES,
+                            "input_context": queue_head["output_context"],
+                            "curr_yes_or_no": None,
+                            "prev_yes_or_no": {"value": YES, "prev_row": curr_row},
+                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
                         })
+
                     else:
                         self.queue.append({
                             "index": queue_head["index"],
-                            "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                            "prev_yes_or_no": YES,
+                            "input_context": queue_head["output_context"],
+                            "curr_yes_or_no": YES,
+                            "prev_yes_or_no": None,
+                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
                         })
+
                     if curr_row[NO].isdigit():
                         self.queue.append({
                             "index": queue_head["index"] + int(curr_row[NO]),
-                            "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                            "prev_yes_or_no": NO,
+                            "input_context": queue_head["output_context"],
+                            "curr_yes_or_no": None,
+                            "prev_yes_or_no": {"value": NO, "prev_row": curr_row},
+                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
                         })
                     else:
                         self.queue.append({
                             "index": queue_head["index"],
-                            "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                            "prev_yes_or_no": NO,
+                            "input_context": queue_head["output_context"],
+                            "curr_yes_or_no": NO,
+                            "prev_yes_or_no": None,
+                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
                         })
-                curr_intent = self.intents.intent_json(queue_head, input_context)
+                curr_intent = self.intents.intent_json(queue_head, queue_head["input_context"])
                 self.result_json_data.append(curr_intent)
-                self.result_yes_no.append(queue_head["prev_yes_or_no"])
-        for e in self.result_json_data:
-            print(e)
+                if queue_head["curr_yes_or_no"] is None and queue_head["prev_yes_or_no"] is None:
+                    self.result_yes_no.append(None)
+                elif queue_head["curr_yes_or_no"] is not None:
+                    self.result_yes_no.append(YES if queue_head["curr_yes_or_no"] == YES else NO)
+                elif queue_head["prev_yes_or_no"] is not None:
+                    self.result_yes_no.append(YES if queue_head["prev_yes_or_no"] == YES else NO)
+                # self.result_yes_no.append(queue_head["curr_yes_or_no"])
+        for i in range(len(self.result_yes_no)):
+            print(self.result_json_data[i])
+            print(self.result_yes_no[i])
+
     def queue_head_hash(self, queue_head):
-        return (queue_head["index"], queue_head["prev_yes_or_no"])
-            # if queue_head["prev_yes_or_no"] is not None:
-            #     if queue_head["index"] not in visited:
-            #         visited.add(queue_head["index"])
-            #         input_context = queue_head["input_context"]
-            #
-            #         curr_intent = self.intents.intent_json(queue_head, input_context)
-            #         self.result_json_data.append(curr_intent)
-            #         self.result_yes_no.append(queue_head["prev_yes_or_no"])
-            #
-            #         self.handle_append_to_queue(queue_head)
-            # else:
-            #     input_context = queue_head["input_context"]
-            #     curr_intent = self.intents.intent_json(queue_head, input_context)
-            #     self.result_json_data.append(curr_intent)
-            #     self.result_yes_no.append(queue_head["prev_yes_or_no"])
+        return queue_head["index"], queue_head["curr_yes_or_no"]
 
         # append fallback_intent to back of lists
         self.result_json_data.append(self.intents.fallback_intent)
@@ -146,51 +156,30 @@ class CreateIntentsData:
             self.queue.append({
                 "index": queue_head["index"] + 1,
                 "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "prev_yes_or_no": None,
+                "curr_yes_or_no": None,
                 "value": None
             })
         else:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[YES]) if curr_row[YES].isdigit() else queue_head["index"],
-                "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "prev_yes_or_no": YES,
+                "input_context": f"{curr_row[IDENTIFIER].replace(' ', '-')}-Yes",
+                "curr_yes_or_no": YES,
                 "value": curr_row[YES]
             })
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[NO]) if curr_row[NO].isdigit() else queue_head["index"],
                 "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "prev_yes_or_no": NO,
+                "curr_yes_or_no": NO,
                 "value": curr_row[NO]
             })
-
-    # def handle_yes_no(self, queue_head, visited, input_context, answer_index=None):
-    #     curr_row = self.csv_data[queue_head["index"]]
-    #     if answer_index is None:
-    #         self.queue.append({
-    #             "index": queue_head["index"] + 1,
-    #             "input_context": curr_row[IDENTIFIER].replace(" ", "-").replace(" ", "-"),
-    #         })
-    #         temp_intent_json = self.intents.intent_json(queue_head, input_context, False)
-    #         self.result_json_data.append(temp_intent_json)
-    #         self.result_yes_no.append("N/A")
-    #         return
-    #
-    #     if curr_row[answer_index].isdigit() and queue_head["index"] + int(curr_row[answer_index]) not in visited:
-    #         self.queue.append({
-    #             "index": queue_head["index"] + int(curr_row[answer_index]),
-    #             "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-    #         })
-    #         temp_intent_json = self.intents.intent_json(queue_head, input_context, False, answer_index)
-    #     else:
-    #         temp_intent_json = self.intents.intent_json(queue_head, input_context, True, answer_index)
-    #     self.result_json_data.append(temp_intent_json)
-    #     self.result_yes_no.append(True if answer_index == YES else False)
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
         if curr_row[YES] == '' and curr_row[NO] == '':
             return True
         return False
+
+
 class CreateChatbotFiles:
     data = CSVData()
     dirname = os.path.dirname(__file__)
@@ -210,11 +199,12 @@ class CreateChatbotFiles:
         Path(os.path.join(self.chatbot_target_path, "intents")).mkdir(parents=True, exist_ok=True)
         with open(os.path.join(self.chatbot_target_path, "intents", "Default Fallback Intent.json"), "w",
                   encoding="utf-8") as file:
-            json.dump(self.intents_list[len(self.intents_list)-1], file, indent=2)
+            json.dump(self.intents_list[len(self.intents_list) - 1], file, indent=2)
 
         for index in range(len(self.intents_list)):
             curr_name = self.intents_list[index]["name"]
-            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}.json"), "w", encoding="utf-8") as file:
+            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}.json"), "w",
+                      encoding="utf-8") as file:
                 json.dump(self.intents_list[index], file, indent=2)
 
             with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
@@ -236,7 +226,8 @@ class CreateChatbotFiles:
 
         Path(os.path.join(self.chatbot_target_path, "entities")).mkdir(parents=True, exist_ok=True)
 
-        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation.json"), "w", encoding="utf-8") as file:
+        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation.json"), "w",
+                  encoding="utf-8") as file:
             json.dump(entities.confirmation_entity, file, indent=2)
 
         with open(os.path.join(self.chatbot_target_path, "entities", "confirmation_entries_en.json"), "w",

@@ -103,9 +103,9 @@ class Intents:
     def speech_value(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
 
-        if queue_head["prev_yes_or_no"] is None:
+        if queue_head["curr_yes_or_no"] is None:
             return curr_row[QUESTION]
-        answer = curr_row[queue_head["prev_yes_or_no"]]
+        answer = curr_row[queue_head["curr_yes_or_no"]]
         if answer.isdigit():
             return self.csv_data[queue_head["index"] + int(answer)][QUESTION]
         else:
@@ -114,12 +114,12 @@ class Intents:
     def intent_json(self, queue_head, input_context=None):
 
         curr_row = self.csv_data[queue_head["index"]]
-        speech = self.speech_value(queue_head)
-        if queue_head["prev_yes_or_no"] is None:
-            name = curr_row[IDENTIFIER].title()
+        if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
+            name = f"{curr_row[IDENTIFIER].title()}-initial"
             parameters = []
-        else:
-            name = curr_row[IDENTIFIER].title() + " - " + ("Yes" if queue_head["prev_yes_or_no"] == YES else "No")
+            speech = curr_row[QUESTION]
+        elif queue_head["curr_yes_or_no"] is not None:
+            name = curr_row[IDENTIFIER].title() + " - " + ("Yes" if queue_head["curr_yes_or_no"] == YES else "No")
             parameters = [
                 {
                     "id": str(uuid4()),
@@ -134,6 +134,34 @@ class Intents:
                     "isList": False
                 }
             ]
+            answer = curr_row[queue_head["curr_yes_or_no"]]
+            if answer.isdigit():
+                speech = self.csv_data[queue_head["index"] + int(answer)][QUESTION]
+            else:
+                speech = answer
+
+        elif queue_head["prev_yes_or_no"] is not None:
+            prev_yes_or_no = queue_head["prev_yes_or_no"]["value"]
+            prev_row = queue_head["prev_yes_or_no"]["prev_row"]
+
+            name = prev_row[IDENTIFIER].title() + " - " + ("Yes" if prev_yes_or_no == YES else "No")
+            parameters = [
+                {
+                    "id": str(uuid4()),
+                    "required": True,
+                    "dataType": "@confirmation",
+                    "name": "confirmation",
+                    "value": "$confirmation",
+                    "promptMessages": [],
+                    "noMatchPromptMessages": [],
+                    "noInputPromptMessages": [],
+                    "outputDialogContexts": [],
+                    "isList": False
+                }
+            ]
+            speech = curr_row[QUESTION]
+
+        output_context_name = queue_head["output_context"]
         data = {
             "id": str(uuid4()),
             "name": name,
@@ -143,7 +171,7 @@ class Intents:
                 "resetContexts": False,
                 "affectedContexts": [
                     {
-                        "name": curr_row[IDENTIFIER].replace(" ", "-"),
+                        "name": output_context_name,
                         "parameters": {},
                         "lifespan": 1
                     }
