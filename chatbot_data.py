@@ -91,7 +91,7 @@ class Intents:
                 }
             ],
             "priority": 500000,
-            "webhookUsed": webhook_used,
+            "webhookUsed": False,
             "webhookForSlotFilling": False,
             "fallbackIntent": True,
             "events": [],
@@ -111,15 +111,16 @@ class Intents:
         else:
             return answer
 
-    def intent_json(self, queue_head, input_context=None):
+    def intent_json(self, queue_head, is_welcome_intent):
 
         curr_row = self.csv_data[queue_head["index"]]
+        events = [{"name": "WELCOME"}] if is_welcome_intent else []
         if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
-            name = f"{curr_row[IDENTIFIER].title()}-initial"
+            name = f"{curr_row[IDENTIFIER].replace('-',' ').title()} - Initial"
             parameters = []
             speech = curr_row[QUESTION]
         elif queue_head["curr_yes_or_no"] is not None:
-            name = curr_row[IDENTIFIER].title() + " - " + ("Yes" if queue_head["curr_yes_or_no"] == YES else "No")
+            name = curr_row[IDENTIFIER].replace('-',' ').title() + " - " + ("Yes" if queue_head["curr_yes_or_no"] == YES else "No")
             parameters = [
                 {
                     "id": str(uuid4()),
@@ -166,7 +167,7 @@ class Intents:
             "id": str(uuid4()),
             "name": name,
             "auto": True,
-            "contexts": [] if input_context is None else [input_context],
+            "contexts": [] if queue_head["input_context"] is None else [queue_head["input_context"]],
             "responses": [{
                 "resetContexts": False,
                 "affectedContexts": [
@@ -192,7 +193,7 @@ class Intents:
             "webhookUsed": self.webhook_used,
             "webhookForSlotFilling": False,
             "fallbackIntent": False,
-            "events": [],
+            "events": events,
             "conditionalResponses": [],
             "condition": "",
             "conditionalFollowupEvents": []
@@ -454,10 +455,10 @@ class Usersays:
 
     welcome_usersays_data = [
         {
-            "id": "9fe716ea-f9ad-4d5f-82f2-56641f99c093",
+            "id": "469d1ade-b56c-42ab-b579-5eef4d6cb585",
             "data": [
                 {
-                    "text": "hiya",
+                    "text": "just going to say hi",
                     "userDefined": False
                 }
             ],
@@ -466,7 +467,103 @@ class Usersays:
             "updated": 0
         },
         {
-            "id": "aa3a4008-1fbe-4f6a-b223-e8ca0b30e1b7",
+            "id": "03dd9704-fccd-47de-9584-bad1510d4dc1",
+            "data": [
+                {
+                    "text": "heya",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "f13b2ca4-0b43-4694-8cde-6afe62a2dc31",
+            "data": [
+                {
+                    "text": "hello hi",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "9c764687-e0bf-428b-96ca-7e2c82cb6035",
+            "data": [
+                {
+                    "text": "howdy",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "d747716d-8a4b-4399-baf8-855fae4b72ff",
+            "data": [
+                {
+                    "text": "hey there",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "e821b357-ab17-4b99-9bd8-12c03df2b6f9",
+            "data": [
+                {
+                    "text": "hi there",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "28cebcf7-01a3-435d-9f70-1cd9f5c2a412",
+            "data": [
+                {
+                    "text": "greetings",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "709ad98c-13ce-46f6-a3f5-56ec17666582",
+            "data": [
+                {
+                    "text": "hey",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "c18959c2-8a84-4342-b3bc-72d41cc27237",
+            "data": [
+                {
+                    "text": "long time no see",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "1404f78e-ecd0-486e-b436-2265b903a2be",
             "data": [
                 {
                     "text": "hello",
@@ -478,10 +575,82 @@ class Usersays:
             "updated": 0
         },
         {
-            "id": "fdfdf4dd-2119-44c5-aad2-501cb812ea68",
+            "id": "43ae41f3-e9e0-4876-87ed-8577e1d3d86c",
+            "data": [
+                {
+                    "text": "lovely day isn\u0027t it",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "bc62063b-ee8f-4963-8dd0-49ecc83e3423",
+            "data": [
+                {
+                    "text": "I greet you",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "d5fa15e8-76dd-4d56-bb39-76848229282e",
+            "data": [
+                {
+                    "text": "hello again",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "23906f4f-fc68-4412-bccf-064162b47e11",
             "data": [
                 {
                     "text": "hi",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "a902bbd4-c28b-475c-8304-ef4cb7e78a8e",
+            "data": [
+                {
+                    "text": "hello there",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "4850b36e-f21e-4442-9630-f91a9950e84f",
+            "data": [
+                {
+                    "text": "hi there",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "a5a9f58d-ef41-4bda-a26d-f581495a18d6",
+            "data": [
+                {
+                    "text": "a good day",
                     "userDefined": False
                 }
             ],
@@ -585,9 +754,9 @@ class AgentAPI:
         process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
         """
 
-    def handler_function(self, curr_intent, next_intent):
+    def handler_function(self, curr_intent):
         agent_add_definition = ""
-        speech = next_intent['responses'][0]['messages'][0]['speech']
+        speech = curr_intent['responses'][0]['messages'][0]['speech']
         if isinstance(speech, list):
             for s in speech:
                 agent_add_definition += f'\tagent.add("{s}"){os.linesep}'
@@ -620,8 +789,8 @@ class AgentAPI:
                   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
                   console.log("Dialogflow Request body: " + JSON.stringify(request.body));
             """
-        for i in range(len(intents_list)-1):
-            code += self.handler_function(intents_list[i], intents_list[i+1])
+        for i in range(len(intents_list) - 1):
+            code += self.handler_function(intents_list[i], intents_list[i + 1])
 
         code += \
             """
@@ -629,8 +798,8 @@ class AgentAPI:
               let intentMap = new Map();
             """
 
-        for intent in intents_list:
-            code += self.intent_map(intent)
+        for i in range(len(intents_list)-1):  # -1 to exclude Default Fallback Intent from agent code
+            code += self.intent_map(intents_list[i])
 
         code += \
             """

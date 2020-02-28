@@ -8,7 +8,7 @@ from pathlib import Path
 import shutil
 from chatbot_data import Intents, Entities, Usersays, Agent, PackageJson, AgentAPI
 
-WEBHOOK_USED = False  # change this value depending on whether webhooks/fulfillment will be used
+WEBHOOK_USED = True  # change this value depending on whether webhooks/fulfillment will be used
 QUESTION = 0
 YES = 1
 NO = 2
@@ -27,11 +27,7 @@ class CSVData:
             return string
 
     def format_identifier(self, string, regex):
-        # replace commas with spaces, then replace double spaces with single space
-        result = string.replace(",", " ").replace("  ", " ").lower()
-
-        # replace anything that is not in Dialogflow's allowed charset with a hyphen
-        return regex.sub("-", result)
+        return regex.sub("-", string).lower()
 
     def csv_data(self, path):
         regex = re.compile(r"[^a-zA-Z0-9_-]")  # (a-z A-Z), digits (0-9), underscore (_), and hyphen (-)
@@ -80,6 +76,7 @@ class CreateIntentsData:
 
     def walk_tree(self):
         visited = set()
+        is_welcome_intent = True
         while self.queue:
             queue_head = self.queue.popleft()
             if self.queue_head_hash(queue_head) not in visited:
@@ -130,48 +127,29 @@ class CreateIntentsData:
                             "prev_yes_or_no": None,
                             "output_context": curr_row[IDENTIFIER].replace(" ", "-")
                         })
-                curr_intent = self.intents.intent_json(queue_head, queue_head["input_context"])
-                self.result_json_data.append(curr_intent)
-                if queue_head["curr_yes_or_no"] is None and queue_head["prev_yes_or_no"] is None:
+
+                curr_intent = self.intents.intent_json(queue_head, is_welcome_intent)
+                if is_welcome_intent:
+                    self.result_yes_no.append("Welcome")
+                elif queue_head["curr_yes_or_no"] is None and queue_head["prev_yes_or_no"] is None:
                     self.result_yes_no.append(None)
                 elif queue_head["curr_yes_or_no"] is not None:
                     self.result_yes_no.append(YES if queue_head["curr_yes_or_no"] == YES else NO)
                 elif queue_head["prev_yes_or_no"] is not None:
                     self.result_yes_no.append(YES if queue_head["prev_yes_or_no"] == YES else NO)
-                # self.result_yes_no.append(queue_head["curr_yes_or_no"])
-        for i in range(len(self.result_yes_no)):
-            print(self.result_json_data[i])
-            print(self.result_yes_no[i])
 
-    def queue_head_hash(self, queue_head):
-        return queue_head["index"], queue_head["curr_yes_or_no"]
+                self.result_json_data.append(curr_intent)
 
+                is_welcome_intent = False
         # append fallback_intent to back of lists
         self.result_json_data.append(self.intents.fallback_intent)
         self.result_yes_no.append(None)
 
-    def handle_append_to_queue(self, queue_head):
-        curr_row = self.csv_data[queue_head["index"]]
-        if self.yes_no_is_empty(queue_head):
-            self.queue.append({
-                "index": queue_head["index"] + 1,
-                "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "curr_yes_or_no": None,
-                "value": None
-            })
-        else:
-            self.queue.append({
-                "index": queue_head["index"] + int(curr_row[YES]) if curr_row[YES].isdigit() else queue_head["index"],
-                "input_context": f"{curr_row[IDENTIFIER].replace(' ', '-')}-Yes",
-                "curr_yes_or_no": YES,
-                "value": curr_row[YES]
-            })
-            self.queue.append({
-                "index": queue_head["index"] + int(curr_row[NO]) if curr_row[NO].isdigit() else queue_head["index"],
-                "input_context": curr_row[IDENTIFIER].replace(" ", "-"),
-                "curr_yes_or_no": NO,
-                "value": curr_row[NO]
-            })
+    def queue_head_hash(self, queue_head):
+        return queue_head["index"], queue_head["curr_yes_or_no"]
+
+
+
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
@@ -209,14 +187,13 @@ class CreateChatbotFiles:
 
             with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
                       encoding="utf-8") as file:
-                if self.yes_or_no_list[index] == YES:
+                if self.yes_or_no_list[index] == "Welcome":
+                    json.dump(usersays.welcome_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] == YES:
                     json.dump(usersays.yes_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] == NO:
                     json.dump(usersays.no_usersays_data, file, indent=2)
-                elif self.yes_or_no_list[index] == "N/A":
-                    json.dump([], file, indent=2)
                 elif self.yes_or_no_list[index] is None:
-                    # json.dump(usersays.welcome_usersays_data, file, indent=2)
                     json.dump([], file, indent=2)
                 elif self.yes_or_no_list[index] is not None:
                     raise RuntimeError("Error in internal code")
