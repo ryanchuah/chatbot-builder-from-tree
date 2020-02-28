@@ -52,6 +52,12 @@ button.
 replace the current agent version with a new one. All the 
 intents and entities in the older version will be deleted.**
 
+
+### Generated Dialogflow Agent Notes
+Some useful notes about your agent
+1. All intents that end with *...- Initial* (except the Welcome Intent) 
+requires your to manually enter training phrases in the DialogFlow console.  
+
 ## Author
 * [Ryan Chuah](https://github.com/ryanchuah/)
 
