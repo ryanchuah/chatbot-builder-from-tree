@@ -59,7 +59,7 @@ Some useful notes about your agent
 requires your to manually enter training phrases in the DialogFlow console.
 These training phrases correspond to the intent's input context.  
 E.g. if the input context is "contact-name", the training phrases might include 
-*"the contact name is **Ryan*"**, *"his name is **John**"* etc.
+*"the contact name is **Ryan**"*, *"his name is **John**"* etc.
 
 ## Author
 * [Ryan Chuah](https://github.com/ryanchuah/)
