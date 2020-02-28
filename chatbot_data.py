@@ -116,11 +116,12 @@ class Intents:
         curr_row = self.csv_data[queue_head["index"]]
         events = [{"name": "WELCOME"}] if is_welcome_intent else []
         if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
-            name = f"{curr_row[IDENTIFIER].replace('-',' ').title()} - Initial"
+            name = f"{curr_row[IDENTIFIER].replace('-', ' ').title()} - Initial"
             parameters = []
             speech = curr_row[QUESTION]
         elif queue_head["curr_yes_or_no"] is not None:
-            name = curr_row[IDENTIFIER].replace('-',' ').title() + " - " + ("Yes" if queue_head["curr_yes_or_no"] == YES else "No")
+            name = curr_row[IDENTIFIER].replace('-', ' ').title() + " - " + (
+                "Yes" if queue_head["curr_yes_or_no"] == YES else "No")
             parameters = [
                 {
                     "id": str(uuid4()),
@@ -142,8 +143,8 @@ class Intents:
                 speech = answer
 
         elif queue_head["prev_yes_or_no"] is not None:
-            prev_yes_or_no = queue_head["prev_yes_or_no"]["value"]
-            prev_row = queue_head["prev_yes_or_no"]["prev_row"]
+            prev_yes_or_no = queue_head["prev_yes_or_no"]
+            prev_row = queue_head["prev_row"]
 
             name = prev_row[IDENTIFIER].title() + " - " + ("Yes" if prev_yes_or_no == YES else "No")
             parameters = [
@@ -162,7 +163,6 @@ class Intents:
             ]
             speech = curr_row[QUESTION]
 
-        output_context_name = queue_head["output_context"]
         data = {
             "id": str(uuid4()),
             "name": name,
@@ -172,7 +172,7 @@ class Intents:
                 "resetContexts": False,
                 "affectedContexts": [
                     {
-                        "name": output_context_name,
+                        "name": queue_head["output_context"],
                         "parameters": {},
                         "lifespan": 1
                     }
@@ -789,8 +789,8 @@ class AgentAPI:
                   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
                   console.log("Dialogflow Request body: " + JSON.stringify(request.body));
             """
-        for i in range(len(intents_list) - 1):
-            code += self.handler_function(intents_list[i], intents_list[i + 1])
+        for i in range(len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
+            code += self.handler_function(intents_list[i])
 
         code += \
             """
@@ -798,7 +798,7 @@ class AgentAPI:
               let intentMap = new Map();
             """
 
-        for i in range(len(intents_list)-1):  # -1 to exclude Default Fallback Intent from agent code
+        for i in range(len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
             code += self.intent_map(intents_list[i])
 
         code += \

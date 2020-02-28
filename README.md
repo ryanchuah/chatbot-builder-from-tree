@@ -56,7 +56,10 @@ intents and entities in the older version will be deleted.**
 ### Generated Dialogflow Agent Notes
 Some useful notes about your agent
 1. All intents that end with *...- Initial* (except the Welcome Intent) 
-requires your to manually enter training phrases in the DialogFlow console.  
+requires your to manually enter training phrases in the DialogFlow console.
+These training phrases correspond to the intent's input context.  
+E.g. if the input context is "contact-name", the training phrases might include 
+*"the contact name is **Ryan*"**, *"his name is **John**"* etc.
 
 ## Author
 * [Ryan Chuah](https://github.com/ryanchuah/)

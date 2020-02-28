@@ -38,22 +38,16 @@ class CSVData:
 
             next(csv_reader, None)  # skip header during iteration
             identifiers = set()
-            index = 0
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
-                row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)
+                row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)  # replace invalid chars with a hyphen
                 if not row[IDENTIFIER]:
                     raise ValueError("Identifier field in CSV file cannot be left blank")
                 elif row[IDENTIFIER] in identifiers:
                     raise ValueError("Two or more identifiers in CSV file are equal. Identifiers must be unique.")
 
                 identifiers.add(row[IDENTIFIER])
-                if index > 0:
-                    row.append(data[index - 1][IDENTIFIER])
-                else:
-                    row.append(None)
-                index += 1
                 data.append(row)
             return data
 
@@ -68,6 +62,7 @@ class CreateIntentsData:
         self.queue = deque()
         self.queue.append({
             "index": 0,
+            "prev_row": None,
             "input_context": None,
             "curr_yes_or_no": None,
             "prev_yes_or_no": None,
@@ -87,46 +82,16 @@ class CreateIntentsData:
                 if self.yes_no_is_empty(queue_head):
                     self.queue.append({
                         "index": queue_head["index"] + 1,
+                        "prev_row": curr_row,
                         "input_context": queue_head["output_context"],
                         "curr_yes_or_no": None,
                         "prev_yes_or_no": None,
-                        "output_context": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial"
+                        "output_context": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial",
+                        "name": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace('-', ' ').title()} - Initial"
                     })
                 else:
-                    if curr_row[YES].isdigit():
-                        self.queue.append({
-                            "index": queue_head["index"] + int(curr_row[YES]),
-                            "input_context": queue_head["output_context"],
-                            "curr_yes_or_no": None,
-                            "prev_yes_or_no": {"value": YES, "prev_row": curr_row},
-                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
-                        })
-
-                    else:
-                        self.queue.append({
-                            "index": queue_head["index"],
-                            "input_context": queue_head["output_context"],
-                            "curr_yes_or_no": YES,
-                            "prev_yes_or_no": None,
-                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
-                        })
-
-                    if curr_row[NO].isdigit():
-                        self.queue.append({
-                            "index": queue_head["index"] + int(curr_row[NO]),
-                            "input_context": queue_head["output_context"],
-                            "curr_yes_or_no": None,
-                            "prev_yes_or_no": {"value": NO, "prev_row": curr_row},
-                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
-                        })
-                    else:
-                        self.queue.append({
-                            "index": queue_head["index"],
-                            "input_context": queue_head["output_context"],
-                            "curr_yes_or_no": NO,
-                            "prev_yes_or_no": None,
-                            "output_context": curr_row[IDENTIFIER].replace(" ", "-")
-                        })
+                    self.handle_yes_no_fields(queue_head, YES)
+                    self.handle_yes_no_fields(queue_head, NO)
 
                 curr_intent = self.intents.intent_json(queue_head, is_welcome_intent)
                 if is_welcome_intent:
@@ -141,15 +106,35 @@ class CreateIntentsData:
                 self.result_json_data.append(curr_intent)
 
                 is_welcome_intent = False
+
         # append fallback_intent to back of lists
         self.result_json_data.append(self.intents.fallback_intent)
         self.result_yes_no.append(None)
 
+    def handle_yes_no_fields(self, queue_head, answer):
+        curr_row = self.csv_data[queue_head["index"]]
+
+        if curr_row[answer].isdigit():
+            self.queue.append({
+                "index": queue_head["index"] + int(curr_row[answer]),
+                "prev_row": curr_row,
+                "input_context": queue_head["output_context"],
+                "curr_yes_or_no": None,
+                "prev_yes_or_no": answer,
+                "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
+            })
+        else:
+            self.queue.append({
+                "index": queue_head["index"],
+                "prev_row": curr_row,
+                "input_context": queue_head["output_context"],
+                "curr_yes_or_no": answer,
+                "prev_yes_or_no": None,
+                "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
+            })
+
     def queue_head_hash(self, queue_head):
         return queue_head["index"], queue_head["curr_yes_or_no"]
-
-
-
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
