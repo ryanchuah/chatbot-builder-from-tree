@@ -60,6 +60,10 @@ requires your to manually enter training phrases in the DialogFlow console.
 These training phrases correspond to the intent's input context.  
 E.g. if the input context is "contact-name", the training phrases might include 
 *"the contact name is **Ryan**"*, *"his name is **John**"* etc.
+2. In the agent code generated, `mongoUtil` is a utility class used
+to configure a MongoDB connection. Likewise, `var db` is our MongoDB database
+connection that was started in our *mongoUtil* module. These variables will
+likely not be relevant to you, and it is safe to remove these lines.
 
 ## Author
 * [Ryan Chuah](https://github.com/ryanchuah/)
