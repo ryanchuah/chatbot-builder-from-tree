@@ -746,7 +746,7 @@ class AgentAPI:
         const express = require("express");
         const router = express.Router();
 
-        var mongoUtil = require("../../mongoUtil");
+        var mongoUtil = require("../mongoUtil");
         var db = mongoUtil.getDbData();
         const { WebhookClient } = require("dialogflow-fulfillment");
         const info = {};
