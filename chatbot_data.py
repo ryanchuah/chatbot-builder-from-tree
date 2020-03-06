@@ -24,7 +24,7 @@ class Intents:
                         {
                             "name": "DefaultWelcomeIntent-followup",
                             "parameters": {},
-                            "lifespan": 1
+                            "lifespan": 3
                         }
                     ],
                     "parameters": [],
@@ -174,7 +174,7 @@ class Intents:
                     {
                         "name": queue_head["output_context"],
                         "parameters": {},
-                        "lifespan": 1
+                        "lifespan": 3
                     }
                 ],
                 "parameters": parameters,
