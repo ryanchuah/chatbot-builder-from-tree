@@ -12,7 +12,8 @@ WEBHOOK_USED = True  # change this value depending on whether webhooks/fulfillme
 QUESTION = 0
 YES = 1
 NO = 2
-IDENTIFIER = 3
+CLARIFICATION = 3
+IDENTIFIER = 4
 
 
 class CSVData:
@@ -59,6 +60,7 @@ class CreateIntentsData:
         self.intents = Intents(self.csv_data, WEBHOOK_USED)
         self.result_json_data = []
         self.result_yes_no = []
+        self.result_clarification = []
         self.queue = deque()
         self.queue.append({
             "index": 0,
@@ -78,6 +80,7 @@ class CreateIntentsData:
                 visited.add(self.queue_head_hash(queue_head))
 
                 curr_row = self.csv_data[queue_head["index"]]
+                curr_clarification = curr_row[CLARIFICATION]
 
                 if self.yes_no_is_empty(queue_head):
                     self.queue.append({
@@ -104,7 +107,7 @@ class CreateIntentsData:
                     self.result_yes_no.append(YES if queue_head["prev_yes_or_no"] == YES else NO)
 
                 self.result_json_data.append(curr_intent)
-
+                self.result_clarification.append(curr_clarification)
                 is_welcome_intent = False
 
         # append fallback_intent to back of lists
@@ -151,6 +154,7 @@ class CreateChatbotFiles:
     create_intents.walk_tree()
     intents_list = create_intents.result_json_data
     yes_or_no_list = create_intents.result_yes_no
+    clarification_list = create_intents.result_clarification
     chatbot_target_path = os.path.join(dirname, "target", "chatbot")
 
     def __init__(self):
@@ -210,7 +214,7 @@ class CreateChatbotFiles:
         shutil.make_archive(self.chatbot_target_path, "zip", self.chatbot_target_path)
 
     def create_agent_api_file(self):
-        agent_api = AgentAPI()
+        agent_api = AgentAPI(self.clarification_list)
         with open(os.path.join(self.dirname, "target", "agent.js"), "w", encoding="utf-8") as file:
             file.write(agent_api.agent_code(self.intents_list))
 

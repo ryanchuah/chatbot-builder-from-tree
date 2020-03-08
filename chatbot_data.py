@@ -4,7 +4,8 @@ import os
 QUESTION = 0
 YES = 1
 NO = 2
-IDENTIFIER = 3
+CLARIFICATION = 3
+IDENTIFIER = 4
 
 
 class Intents:
@@ -115,6 +116,7 @@ class Intents:
 
         curr_row = self.csv_data[queue_head["index"]]
         events = [{"name": "WELCOME"}] if is_welcome_intent else []
+
         if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
             name = f"{curr_row[IDENTIFIER].replace('-', ' ').title()} - Initial"
             parameters = []
@@ -739,6 +741,9 @@ class PackageJson:
 
 
 class AgentAPI:
+    def __init__(self, clarification_list):
+        self.clarification_list = clarification_list
+
     # agent.js code
     code = \
         """
@@ -771,14 +776,18 @@ class AgentAPI:
     def intent_map(self, intent):
         return f'intentMap.set("{intent["name"]}", handle{intent["name"].replace(" ", "").replace("-", "")});{os.linesep}'
 
+    def clarification_map(self, intent, clarification_text):
+        return f'clarificationMap.set("{intent["responses"][0]["affectedContexts"][0]["name"]}", "{clarification_text}");{os.linesep}'
+
     def agent_code(self, intents_list):
+
         code = \
             """
                 "use strict";
                 const express = require("express");
                 const router = express.Router();
                 
-                var mongoUtil = require("../../mongoUtil");
+                var mongoUtil = require("../mongoUtil");
                 var db = mongoUtil.getDbData();
                 const { WebhookClient } = require("dialogflow-fulfillment");
                 const info = {};
@@ -794,6 +803,41 @@ class AgentAPI:
 
         code += \
             """
+                function handleClarification(agent){
+                var clarificationMap = new Map()
+            """
+        visited_context = set()
+        for i in range(len(self.clarification_list)):
+            curr_intent = intents_list[i]
+            output_context = curr_intent["responses"][0]["affectedContexts"][0]["name"]
+            if output_context not in visited_context:
+                visited_context.add(output_context)
+                code += self.clarification_map(intents_list[i], self.clarification_list[i])
+            
+        code += \
+            """
+                    const requestContexts = request.body.queryResult.outputContexts;
+                    const mostRecentContext = requestContexts.reduce((max, ctx) => {
+                        if ("lifespanCount" in ctx){
+                            if (max.lifespanCount > ctx.lifespanCount){
+                                return max
+                            } else{
+                                return ctx
+                            }
+                        } else{
+                            return max
+                        }
+                    });
+                    
+                    const words = mostRecentContext.name.split("/");
+                    const context = words[words.length - 1];
+                    const responseText = clarificationMap.get(context);
+                    agent.add(responseText);
+                }
+            """
+
+        code += \
+            """
               // Run the proper function handler based on the matched Dialogflow intent name
               let intentMap = new Map();
             """
@@ -801,6 +845,7 @@ class AgentAPI:
         for i in range(len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
             code += self.intent_map(intents_list[i])
 
+        code += 'intentMap.set("Clarification", handleClarification);'
         code += \
             """
               agent.handleRequest(intentMap);
