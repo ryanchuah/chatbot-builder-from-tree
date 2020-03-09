@@ -16,7 +16,7 @@ The first line of the CSV file must contain the following header:
 **No** (Optional): What the chatbot should reply with if the user replied with *no*  
 **Clarification** (Optional): What the chatbot should reply with if the user requests clarification or expresses confusion.
 Some examples of a user input that would cause the chatbot to reply with this clarification would be *"Can you elaborate?"*, 
-*"What is that?"*, *"I'm a bit confused"*
+*"What is that?"*, *"I'm a bit confused"*  
 **_If Yes and No are left blank, it indicates that the flow of the conversation should move to the next line of the CSV file 
 regardless of what a user inputs. If you choose to do this, you must
 manually specify training phrases in your DialogFlow Agent_**  
