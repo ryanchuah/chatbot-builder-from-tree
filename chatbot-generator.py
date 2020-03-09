@@ -68,7 +68,7 @@ class CreateIntentsData:
             "input_context": None,
             "curr_yes_or_no": None,
             "prev_yes_or_no": None,
-            "output_context": f"{self.csv_data[0][IDENTIFIER]}-initial"
+            "output_context": [f"{self.csv_data[0][IDENTIFIER]}-initial"]
         })
 
     def walk_tree(self):
@@ -86,11 +86,12 @@ class CreateIntentsData:
                     self.queue.append({
                         "index": queue_head["index"] + 1,
                         "prev_row": curr_row,
-                        "input_context": queue_head["output_context"],
+                        "input_context": queue_head["output_context"][0],
                         "curr_yes_or_no": None,
                         "prev_yes_or_no": None,
-                        "output_context": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial",
-                        "name": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace('-', ' ').title()} - Initial"
+                        "output_context": [
+                            f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial"],
+                        # "name": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace('-', ' ').title()} - Initial"
                     })
                 else:
                     self.handle_yes_no_fields(queue_head, YES)
@@ -121,19 +122,21 @@ class CreateIntentsData:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer]),
                 "prev_row": curr_row,
-                "input_context": queue_head["output_context"],
+                "input_context": queue_head["output_context"][0],
                 "curr_yes_or_no": None,
                 "prev_yes_or_no": answer,
-                "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
+                "output_context": [curr_row[IDENTIFIER].replace(" ", "-"),
+                                   curr_row[IDENTIFIER].replace(" ", "-") + ("-yes" if answer == YES else "-no")],
             })
         else:
             self.queue.append({
                 "index": queue_head["index"],
                 "prev_row": curr_row,
-                "input_context": queue_head["output_context"],
+                "input_context": queue_head["output_context"][0],
                 "curr_yes_or_no": answer,
                 "prev_yes_or_no": None,
-                "output_context": curr_row[IDENTIFIER].replace(" ", "-"),
+                "output_context": [curr_row[IDENTIFIER].replace(" ", "-"),
+                                   curr_row[IDENTIFIER].replace(" ", "-") + ("-yes" if answer == YES else "-no")],
             })
 
     def queue_head_hash(self, queue_head):

@@ -116,7 +116,13 @@ class Intents:
 
         curr_row = self.csv_data[queue_head["index"]]
         events = [{"name": "WELCOME"}] if is_welcome_intent else []
-
+        output_context = []
+        for context in queue_head["output_context"]:
+            output_context.append({
+                    "name": context,
+                    "parameters": {},
+                    "lifespan": 3
+                })
         if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
             name = f"{curr_row[IDENTIFIER].replace('-', ' ').title()} - Initial"
             parameters = []
@@ -172,13 +178,7 @@ class Intents:
             "contexts": [] if queue_head["input_context"] is None else [queue_head["input_context"]],
             "responses": [{
                 "resetContexts": False,
-                "affectedContexts": [
-                    {
-                        "name": queue_head["output_context"],
-                        "parameters": {},
-                        "lifespan": 3
-                    }
-                ],
+                "affectedContexts": output_context,
                 "parameters": parameters,
                 "messages": [
                     {
@@ -776,8 +776,8 @@ class AgentAPI:
     def intent_map(self, intent):
         return f'intentMap.set("{intent["name"]}", handle{intent["name"].replace(" ", "").replace("-", "")});{os.linesep}'
 
-    def clarification_map(self, intent, clarification_text):
-        return f'clarificationMap.set("{intent["responses"][0]["affectedContexts"][0]["name"]}", "{clarification_text}");{os.linesep}'
+    def clarification_map(self, output_context, clarification_text):
+        return f'clarificationMap.set("{output_context["name"]}", "{clarification_text}");{os.linesep}'
 
     def agent_code(self, intents_list):
 
@@ -809,29 +809,39 @@ class AgentAPI:
         visited_context = set()
         for i in range(len(self.clarification_list)):
             curr_intent = intents_list[i]
-            output_context = curr_intent["responses"][0]["affectedContexts"][0]["name"]
-            if output_context not in visited_context:
-                visited_context.add(output_context)
-                code += self.clarification_map(intents_list[i], self.clarification_list[i])
+            output_contexts = curr_intent["responses"][0]["affectedContexts"]
+            longest_context = max(output_contexts, key=lambda x: len(x['name']))
+
+            code += self.clarification_map(longest_context, self.clarification_list[i])
             
         code += \
             """
                     const requestContexts = request.body.queryResult.outputContexts;
                     const mostRecentContext = requestContexts.reduce((max, ctx) => {
-                        if ("lifespanCount" in ctx){
-                            if (max.lifespanCount > ctx.lifespanCount){
-                                return max
-                            } else{
-                                return ctx
+                        if ("lifespanCount" in ctx) {
+                            if (max["lifespanCount"] > ctx["lifespanCount"]) {
+                                return max;
+                            } else if (max["lifespanCount"] === ctx["lifespanCount"]) {
+                                if (max["name"].length > ctx["name"].length) {
+                                    return max;
+                                } else {
+                                    return ctx;
+                                }
                             }
-                        } else{
-                            return max
+                        } else {
+                            return max;
                         }
                     });
-                    
+            
                     const words = mostRecentContext.name.split("/");
+            
                     const context = words[words.length - 1];
-                    const responseText = clarificationMap.get(context);
+            
+                    if (clarificationMap.has(context)) {
+                        var responseText = clarificationMap.get(context);
+                    } else {
+                        var responseText = "No clarification is available";
+                    }
                     agent.add(responseText);
                 }
             """
