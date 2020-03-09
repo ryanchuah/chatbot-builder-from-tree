@@ -14,6 +14,9 @@ The first line of the CSV file must contain the following header:
 **Questions**: The question to prompt the user with  
 **Yes** (Optional): What the chatbot should reply with if the user replied with *yes*.   
 **No** (Optional): What the chatbot should reply with if the user replied with *no*  
+**Clarification** (Optional): What the chatbot should reply with if the user requests clarification or expresses confusion.
+Some examples of a user input that would cause the chatbot to reply with this clarification would be *"Can you elaborate?"*, 
+*"What is that?"*, *"I'm a bit confused"*.  
 **_If Yes and No are left blank, it indicates that the flow of the conversation should move to the next line of the CSV file 
 regardless of what a user inputs. If you choose to do this, you must
 manually specify training phrases in your DialogFlow Agent_**  
@@ -23,11 +26,11 @@ The following is an example of a decision tree and its corresponding CSV file
 
 ![Decision Tree](https://res.cloudinary.com/cyhiee123/image/upload/v1582307849/Decision_Tree_wlwjdp.png "Food Decision Tree")
 
-    Questions,Yes,No,Unique Identifier
-    What is your name?,,,name
-    What is your email?,,,email
-    Do you like Asian food?,1 line down,Eat some pasta,asian food
-    Do you like Chinese food?,Eat some dumplings,Eat some ramen,chinese food
+    Questions,Yes,No,Clarification,Unique Identifier
+    What’s your name?,,,What name should I call you by?,name
+    What is your email?,,,,email
+    Do you like Asian food?,1 line down,Eat some pasta,Asian food refers to Asian cuisine. Is this something you enjoy eating?,asian food
+    Do you like Chinese food?,Eat some dumplings,Eat some ramen,,chinese food
     
 ### How to run script
 1. Update the *questions-formatted.csv* file provided in the root directory
