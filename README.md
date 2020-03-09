@@ -9,7 +9,7 @@ The CSV file represents a decision tree. The flow of the conversation will
 be determined through this decision tree.
 The first line of the CSV file must contain the following header:
 
-    Questions,Yes,No,Unique Identifier
+    Questions,Yes,No,Clarification,Unique Identifier
     
 **Questions**: The question to prompt the user with  
 **Yes** (Optional): What the chatbot should reply with if the user replied with *yes*.   
