@@ -111,9 +111,11 @@ class CreateIntentsData:
                 self.result_clarification.append(curr_clarification)
                 is_welcome_intent = False
 
-        # append fallback_intent to back of lists
+        # append fallback_intent and clarification_intent to back of lists
         self.result_json_data.append(self.intents.fallback_intent)
         self.result_yes_no.append(None)
+        self.result_json_data.append(self.intents.clarification_intent)
+        self.result_yes_no.append("Clarification")
 
     def handle_yes_no_fields(self, queue_head, answer):
         curr_row = self.csv_data[queue_head["index"]]
@@ -167,9 +169,16 @@ class CreateChatbotFiles:
     def create_intent_files(self):
         usersays = Usersays()
         Path(os.path.join(self.chatbot_target_path, "intents")).mkdir(parents=True, exist_ok=True)
+
+        with open(os.path.join(self.chatbot_target_path, "intents", "Clarification Intent.json"), "w",
+                  encoding="utf-8") as file:
+            clarification_intent_index = len(self.intents_list) - 1
+            json.dump(self.intents_list[clarification_intent_index], file, indent=2)
+
         with open(os.path.join(self.chatbot_target_path, "intents", "Default Fallback Intent.json"), "w",
                   encoding="utf-8") as file:
-            json.dump(self.intents_list[len(self.intents_list) - 1], file, indent=2)
+            fallback_intent_index = len(self.intents_list) - 2
+            json.dump(self.intents_list[fallback_intent_index], file, indent=2)
 
         for index in range(len(self.intents_list)):
             curr_name = self.intents_list[index]["name"]
@@ -181,6 +190,8 @@ class CreateChatbotFiles:
                       encoding="utf-8") as file:
                 if self.yes_or_no_list[index] == "Welcome":
                     json.dump(usersays.welcome_usersays_data, file, indent=2)
+                elif self.yes_or_no_list[index] == "Clarification":
+                    json.dump(usersays.clarification_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] == YES:
                     json.dump(usersays.yes_usersays_data, file, indent=2)
                 elif self.yes_or_no_list[index] == NO:

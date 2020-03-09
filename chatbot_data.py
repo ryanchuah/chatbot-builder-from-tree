@@ -101,6 +101,38 @@ class Intents:
             "conditionalFollowupEvents": []
         }
 
+        self.clarification_intent = {
+            "id": "dc47ad0a-4596-4982-bf99-0a3503e24d5b",
+            "name": "Clarification Intent",
+            "auto": True,
+            "contexts": [],
+            "responses": [
+                {
+                    "resetContexts": False,
+                    "affectedContexts": [],
+                    "parameters": [],
+                    "messages": [
+                        {
+                            "type": 0,
+                            "lang": "en",
+                            "condition": "",
+                            "speech": []
+                        }
+                    ],
+                    "defaultResponsePlatforms": {},
+                    "speech": []
+                }
+            ],
+            "priority": 500000,
+            "webhookUsed": True,
+            "webhookForSlotFilling": False,
+            "fallbackIntent": False,
+            "events": [],
+            "conditionalResponses": [],
+            "condition": "",
+            "conditionalFollowupEvents": []
+        }
+
     def speech_value(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
 
@@ -119,10 +151,10 @@ class Intents:
         output_context = []
         for context in queue_head["output_context"]:
             output_context.append({
-                    "name": context,
-                    "parameters": {},
-                    "lifespan": 3
-                })
+                "name": context,
+                "parameters": {},
+                "lifespan": 3
+            })
         if queue_head["prev_yes_or_no"] is None and queue_head["curr_yes_or_no"] is None:
             name = f"{curr_row[IDENTIFIER].replace('-', ' ').title()} - Initial"
             parameters = []
@@ -662,6 +694,177 @@ class Usersays:
         }
     ]
 
+    clarification_usersays_data = [
+        {
+            "id": "7ae1603c-06c9-45b5-b5d4-0e690acee021",
+            "data": [
+                {
+                    "text": "what is that?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "6b51fd54-8ed2-48eb-a5bf-b8c18356d98d",
+            "data": [
+                {
+                    "text": "elaborate please",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "950bfd6c-028a-4fb2-b511-3d5087f390d8",
+            "data": [
+                {
+                    "text": "i\u0027m confused",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "b6ef812f-88e9-407b-9fd1-f88025424b47",
+            "data": [
+                {
+                    "text": "huh?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "11b7b74b-7af9-4d2e-8b88-a50b76680a7b",
+            "data": [
+                {
+                    "text": "what do you mean?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "7a61a660-1bd5-4c3b-9a58-1cebe0bbe198",
+            "data": [
+                {
+                    "text": "can you clarify what you mean?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "eb42e1e0-a4b2-428d-8765-a8c9a4705481",
+            "data": [
+                {
+                    "text": "clarify please",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "e0767773-3d97-4f87-b86e-7714221f6886",
+            "data": [
+                {
+                    "text": "please clarify",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "40bae683-153b-48ed-a811-41eea93f304d",
+            "data": [
+                {
+                    "text": "please elaborate",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "2ae64f8b-985b-4b09-ae62-1616873f3909",
+            "data": [
+                {
+                    "text": "can you elaborate?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "a42371eb-5984-4450-8ea4-34a315280ac7",
+            "data": [
+                {
+                    "text": "i don\u0027t understand?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "924ddedc-6c50-4131-a825-25a69e5c546c",
+            "data": [
+                {
+                    "text": "i don\u0027t understand",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "28aa965a-6d31-4314-8353-fe0532feabb0",
+            "data": [
+                {
+                    "text": "what",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 0,
+            "updated": 0
+        },
+        {
+            "id": "95970d8d-5142-4d32-8cfa-126cf51fee5e",
+            "data": [
+                {
+                    "text": "what?",
+                    "userDefined": False
+                }
+            ],
+            "isTemplate": False,
+            "count": 1,
+            "updated": 0
+        }
+    ]
+
 
 class Agent:
     def __init__(self, webhook_used):
@@ -813,27 +1016,29 @@ class AgentAPI:
             longest_context = max(output_contexts, key=lambda x: len(x['name']))
 
             code += self.clarification_map(longest_context, self.clarification_list[i])
-            
+
         code += \
             """
                     const requestContexts = request.body.queryResult.outputContexts;
                     const mostRecentContext = requestContexts.reduce((max, ctx) => {
-                        if ("lifespanCount" in ctx) {
-                            if (max["lifespanCount"] > ctx["lifespanCount"]) {
-                                return max;
-                            } else if (max["lifespanCount"] === ctx["lifespanCount"]) {
-                                if (max["name"].length > ctx["name"].length) {
-                                    return max;
-                                } else {
-                                    return ctx;
-                                }
-                            }
-                        } else {
+                    if (!("lifespanCount" in max)) return ctx;
+        
+                    if ("lifespanCount" in ctx) {
+                        if (max.lifespanCount > ctx.lifespanCount) {
                             return max;
+                        } else if (max.lifespanCount === ctx.lifespanCount) {
+                            if (max.name.length > ctx.name.length) {
+                                return max;
+                            } else {
+                                return ctx;
+                            }
                         }
-                    });
-            
-                    const words = mostRecentContext.name.split("/");
+                    } else {
+                        return max;
+                    }
+                });
+        
+                const words = mostRecentContext.name.split("/");
             
                     const context = words[words.length - 1];
             
@@ -855,7 +1060,7 @@ class AgentAPI:
         for i in range(len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
             code += self.intent_map(intents_list[i])
 
-        code += 'intentMap.set("Clarification", handleClarification);'
+        code += 'intentMap.set("Clarification Intent", handleClarification);'
         code += \
             """
               agent.handleRequest(intentMap);
