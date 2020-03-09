@@ -12,11 +12,11 @@ The first line of the CSV file must contain the following header:
     Questions,Yes,No,Clarification,Unique Identifier
     
 **Questions**: The question to prompt the user with  
-**Yes** (Optional): What the chatbot should reply with if the user replied with *yes*.   
+**Yes** (Optional): What the chatbot should reply with if the user replied with *yes*  
 **No** (Optional): What the chatbot should reply with if the user replied with *no*  
 **Clarification** (Optional): What the chatbot should reply with if the user requests clarification or expresses confusion.
 Some examples of a user input that would cause the chatbot to reply with this clarification would be *"Can you elaborate?"*, 
-*"What is that?"*, *"I'm a bit confused"*.  
+*"What is that?"*, *"I'm a bit confused"*
 **_If Yes and No are left blank, it indicates that the flow of the conversation should move to the next line of the CSV file 
 regardless of what a user inputs. If you choose to do this, you must
 manually specify training phrases in your DialogFlow Agent_**  
@@ -31,6 +31,21 @@ The following is an example of a decision tree and its corresponding CSV file
     What is your email?,,,,email
     Do you like Asian food?,1 line down,Eat some pasta,Asian food refers to Asian cuisine. Is this something you enjoy eating?,asian food
     Do you like Chinese food?,Eat some dumplings,Eat some ramen,,chinese food
+    
+The following is an example of a conversation between a user and a chatbot made from the above CSV file
+
+    User    : Hi
+    Chatbot : What's your name?
+    User    : My name is Ryan
+    Chatbot : What is your email?
+    User    : It's myname@example.com
+    Chatbot : Do you like Asian food?
+    User    : Huh?
+    Chatbot : Asian food refers to Asian cuisine. Is this something you enjoy eating?
+    User    : Oh. Yes, I like Asian cuisine
+    Chatbot : Do you like Chinese food?
+    User    : Not really
+    Chatbot : Eat some ramen   
     
 ### How to run script
 1. Update the *questions-formatted.csv* file provided in the root directory
