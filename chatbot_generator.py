@@ -81,7 +81,6 @@ class CreateIntentsData:
 
                 curr_row = self.csv_data[queue_head["index"]]
                 curr_clarification = curr_row[CLARIFICATION]
-
                 if self.yes_no_is_empty(queue_head):
                     self.queue.append({
                         "index": queue_head["index"] + 1,
@@ -91,7 +90,6 @@ class CreateIntentsData:
                         "prev_yes_or_no": None,
                         "output_context": [
                             f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace(' ', '-')}-initial"],
-                        # "name": f"{self.csv_data[queue_head['index'] + 1][IDENTIFIER].replace('-', ' ').title()} - Initial"
                     })
                 else:
                     self.handle_yes_no_fields(queue_head, YES)
@@ -119,7 +117,6 @@ class CreateIntentsData:
 
     def handle_yes_no_fields(self, queue_head, answer):
         curr_row = self.csv_data[queue_head["index"]]
-
         if curr_row[answer].isdigit():
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer]),
@@ -142,11 +139,11 @@ class CreateIntentsData:
             })
 
     def queue_head_hash(self, queue_head):
-        return queue_head["index"], queue_head["curr_yes_or_no"]
+        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head["prev_row"] is None else queue_head["prev_row"][IDENTIFIER]
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
-        if curr_row[YES] == '' and curr_row[NO] == '':
+        if curr_row[YES].strip() == '' and curr_row[NO].strip() == '':
             return True
         return False
 
