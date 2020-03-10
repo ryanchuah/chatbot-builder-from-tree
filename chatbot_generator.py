@@ -139,7 +139,8 @@ class CreateIntentsData:
             })
 
     def queue_head_hash(self, queue_head):
-        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head["prev_row"] is None else queue_head["prev_row"][IDENTIFIER]
+        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head["prev_row"] is None else \
+            (queue_head["prev_row"][IDENTIFIER], queue_head["prev_row"][YES], queue_head["prev_row"][NO])
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
