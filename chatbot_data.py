@@ -962,7 +962,7 @@ class AgentAPI:
         process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
         """
 
-    def handler_function(self, curr_intent):
+    def handler_function(self, curr_intent, is_welcome_intent):
         agent_add_definition = ""
         speech = curr_intent['responses'][0]['messages'][0]['speech']
         if isinstance(speech, list):
@@ -970,20 +970,39 @@ class AgentAPI:
                 agent_add_definition += f'\tagent.add("{s}"){os.linesep}'
         else:
             agent_add_definition = f'\tagent.add("{speech}"){os.linesep}'
-        return (
-            f"function handle{curr_intent['name'].replace(' ', '').replace('-', '')}(agent) {{{os.linesep}"
-            f"{agent_add_definition}"
-            f"}}{os.linesep}"
-        )
+        result = ""
+
+        result += f"function handle{curr_intent['name'].replace(' ', '').replace('-', '')}(agent) {{{os.linesep}"
+        if is_welcome_intent:
+            result += \
+                """
+                    // reset contexts
+                    const requestContexts = request.body.queryResult.outputContexts;
+                    const mostRecentContext = getMostRecentContext(requestContexts);
+                    for (const ctx of requestContexts) {
+                        const words = ctx.name.split("/");
+
+                        const context = words[words.length - 1];
+                        if (context !== mostRecentContext) {
+                            agent.context.set({ name: context, lifespan: "0" });
+                        }
+                    }
+                """
+
+        result += f"{agent_add_definition}"
+        result += f"}}{os.linesep}"
+        return result
+
 
     def intent_map(self, intent):
         return f'intentMap.set("{intent["name"]}", handle{intent["name"].replace(" ", "").replace("-", "")});{os.linesep}'
 
+
     def clarification_map(self, output_context, clarification_text):
         return f'clarificationMap.set("{output_context["name"]}", "{clarification_text}");{os.linesep}'
 
-    def agent_code(self, intents_list):
 
+    def agent_code(self, intents_list):
         code = \
             """
                 "use strict";
@@ -1001,15 +1020,41 @@ class AgentAPI:
                   console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
                   console.log("Dialogflow Request body: " + JSON.stringify(request.body));
             """
-        for i in range(len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
-            code += self.handler_function(intents_list[i])
+        code += \
+            """
+                function getMostRecentContext(contexts) {
+                    var mostRecentContext = contexts.reduce((max, ctx) => {
+                        if (!("lifespanCount" in max)) return ctx;
+            
+                        if ("lifespanCount" in ctx) {
+                            if (max.lifespanCount > ctx.lifespanCount) {
+                                return max;
+                            } else if (max.lifespanCount === ctx.lifespanCount) {
+                                if (max.name.length > ctx.name.length) {
+                                    return max;
+                                } else {
+                                    return ctx;
+                                }
+                            }
+                        } else {
+                            return max;
+                        }
+                    });
+            
+                    const words = mostRecentContext.name.split("/");
+                    return words[words.length - 1];
+                }
+            """
+        code += self.handler_function(intents_list[0], True)
+        for i in range(1, len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
+            code += self.handler_function(intents_list[i], False)
 
         code += \
             """
                 function handleClarification(agent){
                 var clarificationMap = new Map()
             """
-        visited_context = set()
+
         for i in range(len(self.clarification_list)):
             curr_intent = intents_list[i]
             output_contexts = curr_intent["responses"][0]["affectedContexts"]
@@ -1020,23 +1065,7 @@ class AgentAPI:
         code += \
             """
                     const requestContexts = request.body.queryResult.outputContexts;
-                    const mostRecentContext = requestContexts.reduce((max, ctx) => {
-                    if (!("lifespanCount" in max)) return ctx;
-        
-                    if ("lifespanCount" in ctx) {
-                        if (max.lifespanCount > ctx.lifespanCount) {
-                            return max;
-                        } else if (max.lifespanCount === ctx.lifespanCount) {
-                            if (max.name.length > ctx.name.length) {
-                                return max;
-                            } else {
-                                return ctx;
-                            }
-                        }
-                    } else {
-                        return max;
-                    }
-                });
+                    const mostRecentContext = getMostRecentContext(requestContexts);
         
                 const words = mostRecentContext.name.split("/");
             

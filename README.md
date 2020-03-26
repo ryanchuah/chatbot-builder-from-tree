@@ -1,6 +1,7 @@
 # Dialogflow Chatbot Generator (from decision tree)
 This script generates an agent zip file that can be directly
-imported into DialogFlow. 
+imported into DialogFlow. Optionally, this script also generates
+Node.js code that can be used as a boilerplate for Dialogflow Fulfillment.
 
 
 ## Getting Started
@@ -14,12 +15,14 @@ The first line of the CSV file must contain the following header:
 **Questions**: The question to prompt the user with  
 **Yes** (Optional): What the chatbot should reply with if the user replied with *yes*  
 **No** (Optional): What the chatbot should reply with if the user replied with *no*  
-**Clarification** (Optional): What the chatbot should reply with if the user requests clarification or expresses confusion.
-Some examples of a user input that would cause the chatbot to reply with this clarification would be *"Can you elaborate?"*, 
-*"What is that?"*, *"I'm a bit confused"*  
 **_If Yes and No are left blank, it indicates that the flow of the conversation should move to the next line of the CSV file 
 regardless of what a user inputs. If you choose to do this, you must
 manually specify training phrases in your DialogFlow Agent_**  
+**Clarification** (Optional): What the chatbot should reply with if the user requests clarification or expresses confusion.
+Some examples of a user input that would cause the chatbot to reply with this clarification would be *"Can you elaborate?"*, 
+*"What is that?"*, *"I'm a bit confused"*  
+**_Note that clarification only works if the chatbot is utilising Dialogflow Fulfillment. This means that the value of 
+`WEBHOOK_USED` in this script must be set to `True` in order to generate the agent code needed for Fulfillment (see below)_**  
 **Unique Identifier**: A unique short (~1-8 words) text that uniquely identifies each question  
 
 The following is an example of a decision tree and its corresponding CSV file  
