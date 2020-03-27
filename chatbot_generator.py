@@ -42,6 +42,9 @@ class CSVData:
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
+                # if row[YES] == "1" and row[NO] == "1":
+                #     row[YES] = ""
+                #     row[NO] = ""
                 row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)  # replace invalid chars with a hyphen
                 if not row[IDENTIFIER]:
                     raise ValueError("Identifier field in CSV file cannot be left blank")
@@ -76,16 +79,19 @@ class CreateIntentsData:
         is_welcome_intent = True
         while self.queue:
             queue_head = self.queue.popleft()
+            print(queue_head["output_context"])
             if self.queue_head_hash(queue_head) not in visited:
                 visited.add(self.queue_head_hash(queue_head))
-
+                # if queue_head["index"] is None:
+                #     continue
                 curr_row = self.csv_data[queue_head["index"]]
+                # print(curr_row)
                 curr_clarification = curr_row[CLARIFICATION]
                 if self.yes_no_is_empty(queue_head):
                     self.queue.append({
                         "index": queue_head["index"] + 1,
                         "prev_row": curr_row,
-                        "input_context": queue_head["output_context"][0],
+                        "input_context": max(queue_head["output_context"], key=len),
                         "curr_yes_or_no": None,
                         "prev_yes_or_no": None,
                         "output_context": [
@@ -96,6 +102,11 @@ class CreateIntentsData:
                     self.handle_yes_no_fields(queue_head, NO)
 
                 curr_intent = self.intents.intent_json(queue_head, is_welcome_intent)
+
+                # if curr_intent["name"] in intent_index_map:
+                #     index_of_intent = intent_index_map[curr_intent["name"]]
+                #     self.result_yes_no[index_of_intent]["contexts"].append(queue_head["input_context"])
+                # else:
                 if is_welcome_intent:
                     self.result_yes_no.append("Welcome")
                 elif queue_head["curr_yes_or_no"] is None and queue_head["prev_yes_or_no"] is None:
@@ -121,7 +132,7 @@ class CreateIntentsData:
             self.queue.append({
                 "index": queue_head["index"] + int(curr_row[answer]),
                 "prev_row": curr_row,
-                "input_context": queue_head["output_context"][0],
+                "input_context": max(queue_head["output_context"], key=len),
                 "curr_yes_or_no": None,
                 "prev_yes_or_no": answer,
                 "output_context": [curr_row[IDENTIFIER].replace(" ", "-"),
@@ -131,7 +142,7 @@ class CreateIntentsData:
             self.queue.append({
                 "index": queue_head["index"],
                 "prev_row": curr_row,
-                "input_context": queue_head["output_context"][0],
+                "input_context": max(queue_head["output_context"], key=len),
                 "curr_yes_or_no": answer,
                 "prev_yes_or_no": None,
                 "output_context": [curr_row[IDENTIFIER].replace(" ", "-"),

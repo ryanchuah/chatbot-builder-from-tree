@@ -973,17 +973,18 @@ class AgentAPI:
         result = ""
 
         result += f"function handle{curr_intent['name'].replace(' ', '').replace('-', '')}(agent) {{{os.linesep}"
-        if is_welcome_intent:
+        if True or is_welcome_intent:
             result += \
                 """
                     // reset contexts
                     const requestContexts = request.body.queryResult.outputContexts;
-                    const mostRecentContext = getMostRecentContext(requestContexts);
+                    const mostRecentContextNames = getRecentContextNames(requestContexts);
                     for (const ctx of requestContexts) {
                         const words = ctx.name.split("/");
 
                         const context = words[words.length - 1];
-                        if (context !== mostRecentContext) {
+                        if (!mostRecentContextNames.has(context)) {
+                            console.log(context);
                             agent.context.set({ name: context, lifespan: "0" });
                         }
                     }
@@ -1017,11 +1018,9 @@ class AgentAPI:
                 process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
                 router.post("/", async (request, response) => {
                   const agent = new WebhookClient({ request, response });
-                  console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
-                  console.log("Dialogflow Request body: " + JSON.stringify(request.body));
-            """
-        code += \
-            """
+                  // console.log("Dialogflow Request headers: " + JSON.stringify(request.headers));
+                  // console.log("Dialogflow Request body: " + JSON.stringify(request.body));
+
                 function getMostRecentContext(contexts) {
                     var mostRecentContext = contexts.reduce((max, ctx) => {
                         if (!("lifespanCount" in max)) return ctx;
@@ -1044,6 +1043,28 @@ class AgentAPI:
                     const words = mostRecentContext.name.split("/");
                     return words[words.length - 1];
                 }
+                
+                function getRecentContextNames(contexts) {
+                    const mostRecent = new Set();
+                    var maxLifespanCount = -1;
+                    for (const ctx of contexts) {
+                        if ("lifespanCount" in ctx) {
+                            if (ctx.lifespanCount > maxLifespanCount) {
+                                maxLifespanCount = ctx.lifespanCount;
+                                mostRecent.clear();
+                                const words = ctx.name.split("/");
+                                const contextName = words[words.length - 1];
+                                mostRecent.add(contextName);
+                            } else if (ctx.lifespanCount === maxLifespanCount) {
+                                const words = ctx.name.split("/");
+                                const contextName = words[words.length - 1];
+                                mostRecent.add(contextName);
+                            }
+                        }
+                    }
+                    return mostRecent;
+                }
+    
             """
         code += self.handler_function(intents_list[0], True)
         for i in range(1, len(intents_list) - 1):  # -1 to exclude Default Fallback Intent from agent code
