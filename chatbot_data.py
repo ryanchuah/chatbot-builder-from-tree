@@ -984,7 +984,6 @@ class AgentAPI:
 
                         const context = words[words.length - 1];
                         if (!mostRecentContextNames.has(context)) {
-                            console.log(context);
                             agent.context.set({ name: context, lifespan: "0" });
                         }
                     }
