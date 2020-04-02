@@ -1,0 +1,326 @@
+Questions,Yes,No,Clarification,Unique Identifier
+Do you know which class of Medical Device your software belongs to according to MHRA rules?,54 lines down,1 Line down,"A medical device is any instrument, apparatus, appliance, software, material or other article, whether used alone or in combination, including the software intended by its manufacturer to be used specifically for diagnostic and/or therapeutic purposes and necessary for its proper application, intended by the manufacturer to be used for human beings for the purpose of diagnosis, prevention, monitoring, treatment or alleviation of disease, OR diagnosis, monitoring, treatment, alleviation of or compensation for an injury or handicap, OR investigation, replacement or modification of the anatomy or of a physiological process OR control of conception, and which does not achieve its principal intended action in or on the human body by pharmacological, immunological or metabolic means, but which may be assisted in its function by such means",know class of medical device
+Does the MD not touch patient or contact only intact skin?,54 lines down,1 Line down,,not touch patient
+Does the MD involve channelling or storing for eventual administration?,1 Line down,3 Lines down,,channeling for administration
+"Is the MD to be used with blood, other bodily fluids, organs or tissues?",53 lines down,1 Line down,,used with blood
+May the MD be connected to an active medical device in Class IIa or higher?,51 lines down,52 lines down,,connected to active medical device
+"Does the MD modify biological or chemical composition of blood, body liquids, or other liquids intended for infusion?",1 Line down,2 Lines down,,modify biological composition
+"Is the MD only for filtration, centrifiguration, or exchange of gas or heat?",50 lines down,51 lines down,,"filtration, centrifiguration"
+"Does the MD involve contact with injured skin (mechanical barrier, compression, absorb exudates)?",1 Line down,3 Lines down,,contact with injured skin
+Is the MD intended for wounds which breach dermis and heal only by secondary intent?,49 lines down,1 Line down,,wounds which breach dermis
+"Yes, is the MD intended to manage micro-environment of wounds + others?",47 lines down,46 lines down,,manage micro-environments
+Is the MD invasive in body orifice or stoma (not surgically)?,1 Line down,7 Lines down,,invasive in body orifice
+Is the MD for trancient use?,44 lines down,1 Line down,,trancient use
+Is the MD for short-term use?,1 Line down,2 Lines down,,Short-term use
+"Is the MD only for use in oral cavity, ear canal, or in nasal cavity?",42 lines down,43 lines down,,"oral cavity, ear canal"
+Is the MD for long-term use?,1 Line down,2 Lines down,,Long-term use
+"Is the MD only for use in oral cavity, ear canal, or in nasal cavity and is not liable to be absorbed by the mucous membrane?",41 lines down,42 lines down,,"oral cavity, ear canal, not liable to be absorbed"
+Is the MD to be connected to an active medical device in Class IIa or higher?,40 lines down,1 Line down,,connected to active medical device (2)
+Is the MD surgically invasive and for trancient use?,1 Line down,7 Lines down,,surgically invasive
+Is the MD specifically to control/diagnose/monitor/correct a defect of heart or central circulatory system through direct contact?,40 lines down,1 Line down,,"control, diagnose, monitor or correct"
+Is the MD or use in direct contact with the central nervous systerm?,39 lines down,1 Line down,,direct contact with CNS
+Is the MD a reusable surgical instrument?,35 lines down,1 Line down,,reusable surgical instrument
+Does the MD supply energy or ionising radiation?,36 lines down,1 Line down,,supply energy
+"Does the MD have a biological effect, ie it is mainly or wholly absorbed?",35 lines down,1 Line down,,have a biological effect
+Is the MD intended to administer medicine in a potentially hazardous manner?,34 lines down,33 lines down,,administer medicine
+Is the MD surgically invasive and for short-term use?,1 Line down,6 Lines down,,surgically invasive and short-term use
+Is the MD for use in direct contact with the central nervous system?,33 lines down,1 Line down,,direct contact with CNS (2)
+Is the MD specifically used to monitor/control/diagnose/correct defect of heart or central circulatory system by direct contact?,32 lines down,1 Line down,,"monitor, control, diagnose or correct"
+Does the MD supply energy or ionising radiation?,30 lines down,1 Line down,,supply energy (2)
+Does the MD have a biological effect or is mainly absorbed?,30 lines down,1 Line down,,have a biological effect (2)
+"Does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth)?",28 lines down,27 lines down,,undergo chemical change
+"Is the MD surgically invasive, for long term use, or is an implantable device?",1 Line down,6 Lines down,,"surgically invasive, long term use"
+Is the MD to be used in teeth?,25 lines down,1 Line down,,used in teeth
+Is the MD to be used in direct contact with heart or central nervous/circulatory system?,26 lines down,1 Line down,,direct contact with heart
+Does the MD have a biological effect or is mainly absorbed?,25 lines down,1 Line down,,have a biological effect or mainly absorbed
+"Does the MD undergo chemical change in the body, or is used to administer medicine (not in teeth",24 lines down,1 Line down,,undergo chemical change or administer medicine
+"Is the MD for use in breast implants, or hip, knee, or shoulder joint replacements?",23 lines down,22 lines down,,use in breast implants
+Is the MD an active therapeutic device intended to administer or exchange energy?,1 Line down,3 Lines down,,active therapeutic device
+Does the MD administer or exchange energy in a potentially hazardous way?,20 lines down,1 Line down,,administer or exchange energy
+"Does the MD control, monitor, or influence directly the performance of a Class IIb active therapeutic device?",19 lines down,18 lines down,,"control, monitor or influence"
+"Is the MD an active device for diagnosis intended to supply energy to image in vivo distribution of radiopharmaceuticals, or for direct diagnosis or monitoring of vital physiological processes?",1 Line down,3 Lines down,,supply energy to image in vivo
+Is the MD specifically intended to monitor vital physiological parameters where variations could result in immediate danger?,17 lines down,1 Line down,,monitor vital physiological parameters
+Does the MD emit ionizing radiation and is intended for diagnostic and therapeutic interventional radiology?,16 lines down,15 lines down,,emit ionizing radiation
+Is the MD an active device to administer or remove medicines and other substances to or from the body?,1 Line down,2 Lines down,,active device to administer medicines
+Does the MD do so in a potentially hazardous way?,14 lines down,13 lines down,,potentially hazardous
+Is the MD an active medical device but is not classified by any of the above rules?,11 lines down,1 Line down,,active device not classified
+Does the MD incorporate integral medicinal substances liable to act in an ancillary way on the human body?,13 lines down,1 Line down,,incorporate integral medicinal substances
+Is the MD used for contraception or prevention of sexually transmitted diseases?,1 Line down,2 Lines down,,contraception
+Is the MD implantable or is long-term invasive?,11 lines down,10 lines down,,implantable
+Is the MD specifically to be used for disinfecting MDs?,1 Line down,3 Lines down,,disinfecting Mds
+"Is the MD specifically to be used for disinfecting, cleaning, rinsing or hydrating contact lenses?",8 lines down,1 Line down,,disinfecting contact lenses
+Is the MD specifically to be used for disinfecting invasive MDs?,7 lines down,6 lines down,,disinfecting invasive Mds
+Is the MD intended for recording of X-ray diagnostic images?,5 lines down,1 Line down,,recording of X-ray
+Does the MD utilize non-viable animal tissues or derivatives (not devices in contact with only intact skin)?,6 lines down,1 Line down,,Non-viable animal tissues
+Is the MD a blood bag?,4 lines down,Error,,blood bag
+"Great! You’re all set! Now, let's move on to NICE. Can your Digital Healthcare Technology (DHT) be directly downloaded or purchased by users? Or, is your Digital Healtcare Technology (DHT) designed with artificial intelligence using adaptive algorithms (that is, algorithms which continually and automatically change)? ",18 lines down,6 lines down,,already knows MHRA class
+Your MD belongs to Class I. Now Let's move on to NICE. Do you know which Tier of Digital Healthcare Technology (DHT) belongs to according to NICE rules?,16 lines down,4 lines down,,class I
+Your MD belongs to Class IIa. Now Let's move on to NICE. Do you know which Tier of Digital Healthcare Technology (DHT) belongs to according to NICE rules?,15 lines down,3 lines down,,class IIa
+Your MD belongs to Class IIb. Now Let's move on to NICE. Do you know which Tier of Digital Healthcare Technology (DHT) belongs to according to NICE rules?,14 lines down,2 lines down,,class IIb
+Your MD belongs to Class III. Now Let's move on to NICE. Do you know which Tier of Digital Healthcare Technology (DHT) belongs to according to NICE rules?,13 lines down,1 line down,,class III
+"Ok. Let's start functional classification now. Can your Digital Healthcare Technology (DHT) be directly downloaded or purchased by users? Or, is your Digital Healtcare Technology (DHT) designed with artificial intelligence using adaptive algorithms (that is, algorithms which continually and automatically change)? ",13 lines down,1 line down,,downloaded or purchased
+"Now, let's start figuring out which Tier your DHT belongs to. Please remember your latest Tier as I say. Is your DHT unlikely to have direct and measurable individual patient outcomes? (If yes, Tier 1 - system service)",1 line down,1 line down,,1-System service
+"Does your DHT provides information and resources to patients or the public? The information can include specific conditions or about healty living. (If yes, Tier 2 - inform)",1 line down,1 line down,,2-Inform
+"Does your DHT allow users to record health parameters to create health diaries that are NOT shared with or sent to others? (If yes, Tier 2 - simple monitoring)",1 line down,1 line down,,2-Simple monitoring
+"Does your DHT allow 2-way communication between users and professionals, 3rd party organisations or peers? (Clinical advice is provided by professionals using the DHT). (If yes, Tier 2 - communicate)",1 line down,1 line down,,2-Communicate
+"Is your DHT designed to change user behaviour related to health issues (eg. smoking, eating, alcohol, sexual health, sleeping and exercise.)? (If yes, Tier 3a - preventative behaviour change)",1 line down,1 line down,,3a-behaviour change
+"Does your DHT aim to help people with a diagnosed condition to manage their health? This may include symptom tracking function that connects with a healthcare professional. (If yes, Tier 3a - self-manage)",1 line down,1 line down,,3a-self_manage
+"Does your DHT provide treatment for a diagnosed condition, such as CBT for anxiety, or guides treatment decisions? (If yes, Tier 3b - treat)",1 line down,1 line down,,3b-treat
+"Does your DHT automatically records information and transmits the data to a professional, career or 3rd party organisation WITHOUT any input from the user, to inform clinical management decisions? (If yes, Tier 3b - active monitoring)",1 line down,1 line down,,3b-acitve_monitoring
+"Does your DHT have tools that perform clinical calculations that are likely to affect clinical care decisions? (If yes, Tier 3b - calculate)",1 line down,1 line down,,3b-calculate
+"Does your DHT use data to diagnose a condition in a patient, or to guide a diagnostic decision made by a healthcare professional? (If yes, Tier 3b - diagnose)",1 line down,1 line down,,3b-Diagnose
+"This is the end of the Functional Classification. If you have told multiple Tiers, then you have to choose the highest Tier. Plus, the Tiers are cumulative. This means that your DHT must meet all the standards in the previous Tier(s), as well as its own Tier. (Please say Clarification if you need more explanation). Now we will move on to NHSD’s questions. Would you like to go through them?",2 Lines down,234 lines down,"For Example, a DHT in Tier3a must meet the standard for Tier 1, Tier 2 and Tier 3a; DHT in Tier 3b must meet the standards for all Tiers",Functional Classification Over
+Great! Now let’s move on to NHS Digital. Would you like to answer questions required by NHS Digital?,1 Line down,233 lines down,,PLACEHOLDER
+Great let’s get started. Is your product available to the public and can you provide URL(s) to the app store location(s)?,1 Line down,1 Line down,,1provideURL
+"Can you confirm that users are able to contact you or your organisation directly via the product, if required? ",1 Line down,1 Line down,,2contact organisation
+Does your product use any forms of NHS Branding?,1 Line down,2 Lines down,,3use NHS branding
+Can you confirm that you have permission from the Department of Health & Social Care and that it complies with NHS England’s Branding Guidelines? ,1 Line down,1 Line down,,4confirm use of branding
+Does your product require registration with the General Pharmaceutical Council?,1 Line down,2 Lines down,,5require GPC
+Can you provide evidence confirming registration?,1 Line down,1 Line down,,6confirm with GPC
+Does your product forms part of a service that requires registered healthcare professionals to operate?,1 Line down,2 Lines down,,7require healthcares
+Can you confirm their registration status and names? ,1 Line down,1 Line down,,8confirm healthcare registration
+Can you provide a guest login for your product so that assessors can access and evaluate it? ,1 Line down,1 Line down,,9provide a guest login
+Your organisation requires CQC registration?,1 Line down,4 Lines down,,10require registration with CQC
+Is your organisation registered with CQC? ,1 Line down,3 Lines down,,11confirm registration with CQC
+Can you provide your organisation's CQC account number?,1 Line down,2 Lines down,,12provide CQC number
+Can you provide the date of your organisation's most recent registration certificate?,1 Line down,1 Line down,,13provide recent CQC registration
+Do you think that your organisation does not require CQC registration?,2 Lines down,1 Line down,,14need registration CQC
+Have you reviewed the scope of registration for CQC and confirmed your organisation's activities do not require registration?,1 Line down,1 Line down,,15confirm does not need CQC
+Can you provide a brief description of your product?,1 Line down,1 Line down,,16provide description
+Does your product integrate with a website or other software/device?,1 Line down,1 Line down,,17integrate with website or others
+"Does your product connects to any of the NHS Service listed: Electronic Prescription Service (EPS) or Electronic Referrals Service (eRS) or GP2GP or GP? Connect | GPSoC Connection to Primary Care Systems (EMIS, Microtest, TPP & VISION) | Health and Social Care Network | NHS Mail | NHS Pathways | Spine | Summary Care Records.",1 Line down,2 Lines down,,18connect with devices
+Could your product replace a commissioned NHS service?,1 Line down,2 Lines down,,19replace a NHS service
+Can provide details about how your product could replace a commissioned service?,1 Line down,1 Line down,,20confirm replace a NHS service
+Is your product free to public users? ,1 Line down,1 Line down,,21free to public
+Do you have the source of funding?,1 Line down,1 Line down,,22source of funding
+"Is your product involved in a pilot or trial with an NHS hospital, Trust, CCG or in a primary care setting?",1 Line down,2 Lines down,,23provide a trial
+Can you provide a brief detail of the pilot or trial?(just answer Yes or No),1 Line down,1 Line down,,24provide detail of the trial
+Does your product process personal data of NHS or Social Care users?,1 Line down,2 Lines down,,25confirm process personal data
+Do you know where does the product process (e.g. store) the personal data of NHS or Social Care patient/client/service users?,1 Line down,1 Line down,,26comfirm where to process
+Is your product available on iOS/Android/Windows Mobile/ OS X/ Linux/others?,1 Line down,2 Lines down,,27comfrim available on platforms
+Can you provide the following version number?,1 Line down,1 Line down,,28provide platform number
+Is the type of pharmacy is clearly stated prior to the beginning of any sign up process?,1 Line down,1 Line down,,29comfirm type of pharmacy
+Does your product provide any clinical benefits?,1 Line down,3 Lines down,,30provide clinical benefits
+Do you have any evidence to show success of the clinical benefits?,1 Line down,1 Line down,,31provide evidence of clinical benefits
+Can you upload a relevant document or provide relevant URLs?,1 Line down,2 Lines down,,32provide the URL of clinical benefits+D11
+Can you give a reason why your product does not provide clinical benefits?,1 Line down,1 Line down,,33provide the reason of not have clinical benefits
+Does your product provide any behavioural benefits?,1 Line down,3 Lines down,,34provide behavioural benefits
+"Can you describe the improvements to psychological or social motivation, patient reported outcomes or experience measures?(Just answer Yes or No).",1 Line down,3 Lines down,,35provide improvement of bahavioural benefits
+Can you upload a relevant document or provide relevant URLs ?,1 Line down,2 Lines down,,36provide URL of behaviroural benefits
+Can you give a reason why not?,1 Line down,1 Line down,,37comfirm reason not have behavioural benefits
+Are there any economic benefits to using your product?,1 Line down,3 Lines down,,38comfirm of economic benefits
+Can you describe what economic benefits and the timeframe for success?,1 Line down,3 Lines down,,39describe the economic benefits
+Can you provide any evidence to show success of the economic benefits?,1 Line down,2 Lines down,,40provide evidence of economic benefits
+Can you give a reason why not?,1 Line down,1 Line down,,41provide a reason not have economic benefits
+Are there any other outcomes that you have measured? ,1 Line down,5 Lines down,,42comfirm any other outcomes
+Can you describe what other outcomes and the timeframe for success?,1 Line down,1 Line down,,43provide what other outcomes
+Has your product been evaluated in any way for these other outcomes?,1 Line down,2 Lines down,,44comfirm evaluated for outcomes
+Can you provide evidence demonstrating the evaluation of these outcomes?,1 Line down,1 Line down,,45provide evidence of evaluating outcomes
+Can you upload a relevant document or provide relevant URLs?,1 Line down,1 Line down,,46provide URL of evaluating outcomes
+Can you give the reason why not?,1 Line down,1 Line down,,47provide reason why no outcomes
+Are there any resource impact benefits associated with your product?,1 Line down,2 Lines down,,48confirm resource impact benefits
+Can you provide detail of resource impact benefits?,1 Line down,1 Line down,,49provide detail of resource impact benefits
+ Does your product fall within the scope of the NHS England mandated Safety Standard DCB0129?,1 Line down,2 Lines down,,50confirm within NHS DCB0129
+Can you provide a copy of your Safety Case and Hazard Log?,2 Lines down,2 Lines down,,51provide copy of Safety Case
+Can you rovide a brief explanation as to why your product does not fall within the scope of the NHS England mandated Safety Standard DCB0129?,1 Line down,1 Line down,,52provide why not fall within DCB0129
+Is it possible for users to experience adverse effects as a result of using your product? ,1 Line down,2 Lines down,,53comfirm adverse effects
+Can you list all of the possible adverse effects of using your product if require?,1 Line down,1 Line down,,54provide possible adverse effects
+Has the safety assessment for your product been approved by a qualified clinician?,1 Line down,2 Lines down,,55comfirm approved by clinician
+Can you the name and job title of the reviewer?,1 Line down,1 Line down,,56provide name of clinician
+Does your product process personal data?,1 Line down,4 Lines down,, 57confirm process the data personal
+Can you provide details of any other personal data items being processed by your product that are not listed in the supporting information?,1 Line down,1 Line down,,58provide peronal data processed
+Does your product process sensitive personal data?,1 Line down,2 Lines down,,59confirm process sensitive data
+Can you provide details of any other sensitive personal data items being processed by your product?,2 Lines down,2 Lines down,,60provide sensitive personal data processed
+"You have indicated that the use of your product will not cause any personal or sensitive personal data to be processed.
+Please confirm that:
+• You have read and fully understood the definitions of personal sensitive personal data provided by the Information Commissioner’s Office
+• You have read and fully understood the supporting information and examples
+• You have fully considered all the data including that processed by placing and retrieving information through a cookie or similar technology
+• Should there be an intention to process such data, you accept that a reassessment will be required before the data processing begins in order to remain on the NHS Apps Library
+I confirm",1 Line down,1 Line down,,61confirm fully understanding of personal data/sensitive data
+"Do you understand you/your organisation's role?• 'Controller'
+• 'Controller' and 'manufacturer/designer' of the product) • 'Processor' only or
+• Product 'manufacturer/designer' only.",1 Line down,1 Line down,,62understand organisation's role
+Does your product process personal OR sensitive personal data AND your organisation is not a Controller?,1 Line down,1 Line down,,63process data AND not a controller
+Does your product personal OR sensitive personal data AND your organisation is a Processor (and not a Controller)?,1 Line down,1 Line down,,64process personal data AND processor not controller
+Can you provide the details of the 'Processor' organisation on whose behalf you are processing personal data.,1 Line down,1 Line down,,65provide details of Controller
+Does you rproduct process personal OR sensitive personal data AND your organisation is neither a Controller nor Processor?,1 Line down,2 Lines down,,66process data not controller not processor
+"You/your organisation is developing, or has developed, a product but you will not control or process the personal data because:
+• the individual user who downloads your product controls their own data entirely OR
+• the client (organisation) which buys your product is the ‘Controller’ and will make the decisions described earlier regarding what personal data is processed when using your product).
+If your answer to this is 'Yes', then you/your organisation is a manufacturer or designer (neither a 'Controller' nor 'Processor'). Your app must be designed and configurable to meet the potential clients' (the 'Controller') legal requirements or safeguard the privacy rights of users who individually download the product you make available.",1 Line down,1 Line down,,67choose to know manufacturer or designer
+Does your product process personal OR sensitive personal data AND is a Controller?,1 Line down,2 Lines down,,68process data and Controller
+Is your organisation subject to European/UK Data Protection laws?,1 Line down,1 Line down,,69subject to laws
+Does your product process personal OR sensitive personal data AND your organisation is a Controller AND is subject to European/UK Data Protection Laws?,1 Line down,2 Lines down,,70data AND controller AND Laws
+Does your product have a registration number in the Data Protection Register?,1 Line down,1 Line down,,71confirm number of DPR
+Can you tell us your overall grading (which must achieve Green or Amber to be considered for the NHS Apps Library)?,1 Line down,3 Lines down,,72provide the overall grading
+Can you provide the name and title of a senior manager in the 'Controller' organisation who verifies the grading is accurate?,1 Line down,1 Line down,,72provide the name of overall grading
+Can you supply a copy of the completed ICO Checklist?,1 Line down,1 Line down,,73provide copy pf the checklist
+Does your product your product partially meet the criteria set out in Annex 2 of Guidelines of DPIA?,1 Line down,2 Lines down,,74comfirm meets Annex 2
+Can you provide DPIA includes details of trackers and permissions used by your product along with the justification for why each is required and their purpose?,1 Line down,1 Line down,,75provide DPIA
+Does your DPIA include details of trackers and permissions used by your product?,1 Line down,1 Line down,,76confirm permission of DPIA 
+Does your product porcess personal data AND your organisation is a Controller?,1 Line down,2 Lines down,,77confirm data and CONtroller
+Is the legal basis for each processing purposer of the personal data clearly described to the individual?,1 Line down,1 Line down,,78comfirm legal basis
+Is there an 'other legal basis' for the processing of personal data?,1 Line down,2 Lines down,,79confirm other legal basis
+Can you describe the other legal basis?,1 Line down,1 Line down,,80describe the other legal basis
+Has your organisation developed measures to protect the applicable rights of the data subjects?,1 Line down,5 Lines down,,81confirm measures to protect right
+Do the rights of the data subjects include providing transparency/fair processing information to data subjects?,1 Line down,1 Line down,,82provide transparency to data subject
+"Do the rights of the data include the right of data portability (which only applies where consent or contract with the data subject is the legal basis and personal data are / knowingly and actively provided by the data subject / generated by and collected from the use of the service or device e.g. ‘observed’ such as search history, traffic data, location data, other raw data such as heartbeat tracked by fitness and health trackers)?",1 Line down,1 Line down,,83provide the probability to data subject
+Do the rights of the data subjects include the right to erase (or the “right to be forgotten”)?,1 Line down,1 Line down,,84provide the right to erase
+"Do the rights include the right to rectify, object, restrict processing?",1 Line down,1 Line down,,85provide the right to rectify object
+Does your organisation use all reasonable measures to verify the identity of an individual who exercises these rights?,1 Line down,1 Line down,,86confirm measure ot verify the identity
+Does your product processe personal OR sensitive personal data AND your organisation is a Controller AND allows your users personal data to be processed by a third party?,1 Line down,17 Lines down,,87confirm data AND Controller AND processed by a third party
+"Does your organisation allows or causes your users' personal
+data to be processed by a third party (e.g. hosts the data, manages your website, provides user research or analytics services, user survey tools, bulk email providers that manage your client email lists)?",1 Line down,1 Line down,,88confirm allow third party processing data
+Does the third party provide technical services (e.g. maintains personal data backups or stores personal data in a cloud)?,1 Line down,1 Line down,,89provide techinical services
+Does the third party accesses/uses personal data (for which you are the 'Controller')?,1 Line down,1 Line down,,90confirm third party of personal data
+Is a written binding agreement n place between you/your organisation and each third party ('Processor')?,1 Line down,1 Line down,,91confirm written binding 
+Do No contract clauses indemnify 'Processors' against fines or claims under UK/EU data protection law?,1 Line down,1 Line down,,92confirm no clauses indemnify processors
+Do all contracts clearly set out the subject matter and duration of the processing?,1 Line down,1 Line down,,93confirm set out subject matter
+Do all contracts clearly set out the nature and purpose of the processing?,1 Line down,1 Line down,,94confirm set ot the natur eor purpose
+Do all contracts clearly set out the type of personal data and categories of data subject?,1 Line down,1 Line down,,95confirm set out the type of data
+Do all contracts clearly set out the obligations and rights of the 'Controller'?,1 Line down,1 Line down,,96confirm set out obligation of controller
+Do all contracts require the 'Processor' to only act on the written instructions of the 'Controller'?,1 Line down,1 Line down,,97confirm processor act on the written instruction
+Do all contracts require the 'Processor' to ensure that their employees processing the data are subject to a duty of confidence?,1 Line down,1 Line down,,98confirm unsure their employees processing
+Do all contracts require the 'Processor' to take appropriate measures to ensure the security of processing?,1 Line down,1 Line down,,99confirm ensure the security of processing
+Do all contracts require the 'Processor' to only engage 'Sub- Processors' with the prior consent of the 'Controller' and under the same conditions as the processing written contract?,1 Line down,1 Line down,,100confirm onlyengage sub-processing
+Do all contracts require the 'Processor' to assist the 'Controller' in providing subject access and allowing data subjects to exercise their rights under the UK/EU law?,1 Line down,1 Line down,,101confirm data suject to exercise their rights under UK laws
+"Do all contracts require the 'Processor' to assist the 'Controller' in meeting its UK/EU data protection law obligations in relation to:
+• the security of processing
+• the notification of personal data breaches, and • data protection impact assessment?",1 Line down,1 Line down,,102confirm processor assist controller
+Do all contracts require the 'Processor' to tell the 'Controller' immediately if it is asked to do something infringing UK/EU data protection law?,1 Line down,1 Line down,,103confirm processor tell controller
+Is the personal data obtained directly from the individual?,1 Line down,2 Lines down,,104confirm PD from individual
+Is fair processing information provided at the time the personal data is obtained?,1 Line down,1 Line down,,105confirm fair PD
+Is the personal data obtained from a third party?,1 Line down,2 Lines down,,106confirm PD form third party
+"Is a fair processing information provided within one month of having obtained the data from a third party OR, if the personal data is used to communicate with the individual, at the latest, when the first communication takes place?",1 Line down,1 Line down,,107confirm fair PD of third party
+Does your organisation process personal OR sensitive personal data AND is a Controller?,1 Line down,16 Lines down,,108confirm PD AND controller following q
+"Does your organisation processing include The identity and the contact details of the 'Controller' and where applicable, the 'Controller's' representative?",1 Line down,1 Line down,,109confirm include contact of controller
+Does your organisation processing include the purposes and the legal basis for each purpose?,1 Line down,1 Line down,,110confirm include legal basis for purpose
+"Does your organisation include the recipients, or categories of recipients, of the personal data?",1 Line down,1 Line down,,111confirm include recipients
+"Does your organisation include the details of data transfers outside the European Economic Area, including how the data will be protected. For example: • The recipient is in an ‘adequate’ country (e.g. recognised by the EU Commission to have an adequate level of protection)
+• Binding Corporate Rules (BCR) or
+• Model Contract Clauses
+and you have made the individual aware of how they may obtain a copy of the safeguards, or where they can be seen?",1 Line down,1 Line down,,112confirm include EUC BCR
+"Does your organisation include the retention period or, if no fixed retention period can be provided, the criteria used to determine that period?",1 Line down,1 Line down,,113confirm include retention period
+Does your organisation include the right to lodge a complaint with a supervisory authority (in the UK this would be the Information Commissioner's Office (ICO))?,1 Line down,1 Line down,,114confirm include rigth to lodge
+Does your organisation include whether the provision of personal data is part of a statutory or contractual requirement or obligation and possible consequences of failing to provide the personal data?,1 Line down,1 Line down,,115confirm include failing to the provbide the peronal data
+"Does your organisation include the existence of automated decision making including profiling and information about how decisions are made, the significance and the consequences?",1 Line down,1 Line down,,116confirm include consequences
+Does your organisation include The existence of the data subject’s right to access/obtain a copy of their personal data?,1 Line down,1 Line down,,117confirm include obtain copy of PD
+"Does your organisation include The existence of the data subject’s rights to rectify, erase and restrict their personal data?",1 Line down,1 Line down,,118confirm include restrict their PD
+Does your organisation include the existence of the data subject’s rights to object to the processing?,1 Line down,1 Line down,,119confirm include existence of the data
+Does your organisation include existence of the data subject’s rights to withdraw consent (if consent is the legal basis)?,1 Line down,1 Line down,,120confirm include right to withdraw consent
+Does your organisation include existence of the data subject’s rights to data portability (provide the personal data in machine readable form)?,1 Line down,1 Line down,,121confirm include right to data probability
+"Does your organisation include the existence of the data subject’s rights to object to decisions based solely on automated processing (which could include profiling), if the decisions produce legal effects or similarly significantly affects the data subject?",1 Line down,1 Line down,,122confirm include decission based on automated processing
+Does your organisation include Users are notified of substantial changes to the existing transparency information (and consent obtained again unless the consent obtained previously remains valid)?,1 Line down,1 Line down,,123confirm include notified when changes
+Does  your product processe personal OR sensitive personal data AND your organisation is a Controller and if the legal basis for processing personal data is consent?,1 Line down,15 Lines down,,124confirm SPD AND controller AND consent
+"Is consent freely given, specific for each separate purpose and informed?",1 Line down,1 Line down,,125confirm freely given
+Is consent not a precondition of signing up to a service unless it is necessary for that service?,1 Line down,1 Line down,,126confirm not a precondition
+Is consent requested separately from the terms and conditions?,1 Line down,1 Line down,,127confirm separately from team
+Is the individual provided with the relevant fair processing information?,1 Line down,1 Line down,,128confirm fair process info
+"Can the invidual withdraw consent as easily as it was given (e.g. via the same electronic interface, an unsubscribe link; instructions in emails contained in all communications)?",1 Line down,1 Line down,,129confirm withdraw consent easily
+"Is consent obtained separately for every type of purpose foreseen, for example marketing?",1 Line down,1 Line down,,130confirm obtained seperately
+Is consent recoreded?,1 Line down,1 Line down,,131confirm recorded
+Can your organisation  evidence that the individual gave their valid consent to the processing (e.g. how and when consent was obtained and the information provided to the individual (data subject) at the time)?,1 Line down,1 Line down,,132confirm evidence of valid consent
+Is the individual required to provide a clear affirmative action to signify consent to the processing of personal data for each purpose?,1 Line down,1 Line down,,133confirm affirmative
+Does your organisation NOT use pre-ticked opt-in boxes?,1 Line down,1 Line down,,134confirm not preticked
+Does your organisation NOT use blank opt-out boxes?,1 Line down,1 Line down,,135confirm not use blank
+Does your organisation NOT use default settings?,1 Line down,1 Line down,,136confirm not default setting
+Does your organisation NOT use a blanket acceptance of your terms and conditions?,1 Line down,1 Line down,,137confirm not use a blanket acceptance
+Does your organisation ensures that an individual who refuses or withdraws consent can do so without detriment to the service provided (e.g. an individual is not unfairly penalised - though it is acceptable to offer additiona?,1 Line down,1 Line down,,138confirm ensure individual refuse
+Does your product processe personal OR sensitive personal data of children AND your organisation is a Controller?,1 Line down,27 Lines down,,139confirm PD of child AND Controller
+"Does the processes design by which a child can exercise their data protection rights with the child in mind, and make them easy for children to access and understand?",1 Line down,1 Line down,,140confirm design easy to undersatnd
+Does your product Allow competent children to exercise their own data protection rights?,1 Line down,1 Line down,,141confirm exerciss data protection rights
+"Does you design your processes so that, as far as possible, it is as easy for a child to get their personal data erased as it was for them to provide it in the first place?",1 Line down,1 Line down,,142confirm get PD erased easily
+"Does your organisation complies with all the requirements of the UK/EU data protection legislation, not just those specifically relating to children and included in this checklist?",1 Line down,1 Line down,,143confirm complies requirements of UK data
+Does you/your organisation design your processing with children in mind from the outset and uses a data protection by design and by default approach?,1 Line down,1 Line down,,144confirm process chil dfrom outset
+Does your organisation makes sure that your processing is fair and complies with the data protection principles?,1 Line down,1 Line down,,145confirm fair and complies with DPP
+Does your organisation use Data Protection Impact Assessments (DPIAs) to help you assess and mitigate the risks to children?,1 Line down,1 Line down,,146confirm use DPIAs
+"Is your processing  likely to result in a high risk to the rights and freedom of children, then you always complete a DPIA?",1 Line down,1 Line down,,147confirm risk of childs
+"Can you provide privacy notices which are clear, and written in plain, age-appropriate language?",1 Line down,1 Line down,,148confirm privacy notices
+"Does your organisation use child friendly ways of presenting privacy information, such as diagrams, cartoons, graphics and videos, dashboards, layered and just-in-time notices, icons and symbols?",1 Line down,1 Line down,,149confirm friendly way of data
+"Can you explain to children why you require the personal data you have asked for, and what you will do with it, in a way which they can understand?",1 Line down,1 Line down,,150confirmexplain to childs
+"Does your organisation Explain the risks inherent in the processing, and how you intend to safeguard against them, in a child friendly way, so that children (and their parents) understand the implications of sharing their personal data?",1 Line down,1 Line down,,151confirm explain risk of inherent
+Does your organisation tell children what rights they have over their personal data in language they can understand?,1 Line down,1 Line down,,152confirm tell child rights
+"Does your organisation not usually use children’s personal data to make solely automated decisions about them if these will have a legal, or a similarly significant, effect upon them?",1 Line down,1 Line down,,153confirm not use PD to auto decision
+"If you do use children’s personal data to make such
+decisions, then you make sure that one of the exceptions applies and that suitable, child appropriate measures are in place to safeguard the child’s rights, freedoms and legitimate interests.",1 Line down,1 Line down,,154confirm noe exception
+Does your organisation stop any profiling of a child that is related to direct marketing if they ask you to?,1 Line down,1 Line down,,155confrim stop profilling
+"When considering marketing to children, you take into account their reduced ability to recognise and critically assess the purposes behind the processing and the potential consequences of providing their personal data.",1 Line down,1 Line down,,156confirm marketing child's PD
+Does your organisation take into account sector specific guidance on marketing to make sure that children’s personal data is not used in a way that might lead to their exploitation?,1 Line down,1 Line down,,157confirm take guidance into account
+Does your organisation stop processing a child’s personal data for the purposes of direct marketing if they ask you to?,1 Line down,1 Line down,,158confirm stop PD for marketing
+Does your organisation comply with the direct marketing requirements of the Privacy and Electronic Communications Regulations (PECR)?,1 Line down,1 Line down,,159confirm comply with marketing
+"If you decide not to offer your ISS (online service) directly to children, then you mitigate the risk of them gaining access, using measures that are proportionate to the risks inherent in the processing?",1 Line down,1 Line down,,160confirm not offer ISS
+"When offering ISS to UK children on the basis of consent, you make reasonable efforts (taking into account the available technology and the risks inherent in the processing) to ensure that anyone who provides their own consent is at least 13 years old?",1 Line down,1 Line down,,161provide 13 years old
+"When offering ISS to UK children on the basis of consent, you
+obtain parental consent to the processing for children who are under the age of 13, and make reasonable efforts (taking into account the available technology and risks inherent in the processing) to verify that the person providing consent holds parental responsibility for the child?",1 Line down,1 Line down,,162provide effort
+When targeting wider European (non UK) markets you comply with the age limits applicable in each member state?,1 Line down,1 Line down,,163confirm age limits
+You regularly review available age verification and parental responsibility verification mechanisms to ensure you are using appropriate current technology?,1 Line down,1 Line down,,164confirm review age verification
+You do NOT seek parental consent when offering online preventive or counselling services to a child?,1 Line down,1 Line down,,165confirm not seek parental consent
+"Does your organisation use cookies, web beacons or similar technologies?",1 Line down,9 Lines down,,166confirm cookies
+Does your organisation provides users with a cookie policy?,1 Line down,1 Line down,,167confirm cookies policy
+Does cookie policy explain that consent is being requested for the storage and access of cookies in and from the users’ terminal equipment?,1 Line down,1 Line down,,168confirm cookie explain
+Is the cookie policy ensures consent valid by requiring a clear affirmative action from the user (e.g. pre-ticked boxes or inactivity do not constitute valid consent)?,1 Line down,1 Line down,,169confirm valid cookie
+"The cookie policy fully explains the purpose, in plain language, of each cookie type being used.",1 Line down,1 Line down,,170confirm cookie explain the purpose
+Does your organisation use ‘strictly necessary’ cookies (without which the end user would be unable to use the specific service explicitly requested)?,1 Line down,1 Line down,,171confirm use strictly necessary cookies
+"Does you organisation Exclude 'strictly necessary' cookies, is consent obtained for each separate cookie purpose?",1 Line down,1 Line down,,172confirm exclude strictly necessary cookies
+"Can your organisation evidence that the individual gave
+their valid consent to the processing (e.g. how and when consent was obtained and the information provided to the individual (data subject) at the time)?",1 Line down,1 Line down,,173confirm evidence valid consent
+Can the consent be withdrawn as easily as it was given (e.g. via the same electronic interface)?,1 Line down,1 Line down,,174confirm consent withdraw easily
+Does your organisation use Bug reporting and Online tracking?,1 Line down,4 Lines down,,175confirm bug reporting
+Does your organisation collect usage or bug report data (e.g. Google/Adobe Analytics)?,1 Line down,1 Line down,,176confirm collet bug report data
+Is it collected with informed and valid consent of the user?,1 Line down,1 Line down,,177confirm informed consent of user
+"Is it collected using fully anonymised data (e.g. no personal data, such as tracking data, is collected by you/your organisation or any third party?",1 Line down,1 Line down,,178confirm fully anonymised
+Does your organisation use Appointment of a Data Protection Officer?,1 Line down,2 Lines down,,179confirm DPO
+"Does your organisatin have a designated Data Protection Officer who is formally tasked with ensuring that you/your organisation is aware of, and complies with, its data protection responsibilities?",1 Line down,1 Line down,,180confirm have DPO
+Is your product an application for a smartphone or tablet?,1 Line down,7 Lines down,,181confirm product a mobile devices
+"Does your product access, process or store personal or sensitive personal data?",1 Line down,3 Lines down,,182confirm product processes PD
+"Is your product an application for a smartphone or tablet AND accesses, processes or stores personal or sensitive personal data?",1 Line down,2 Lines down,,183confirm smart phone AND process PD
+Is sensitive personal data persisted to the mobile device?,1 Line down,1 Line down,,184confirm persisted to mobile devices
+Has a code-level security assessment been undertaken?,1 Line down,3 Lines down,,185confirm code-level security
+Can your organisation evidence of the assessment report?,1 Line down,1 Line down,,186confirm evidence of code-level report
+Has the security assessment been undertaken by an external body?,1 Line down,1 Line down,,187confirm by external body
+Does the colour contrast of the text on your native app comply with WCAG 2.0 AA level requirements? All text in your product must have a contrast ratio of at least 4.5 : 1.?,1 Line down,1 Line down,,188confirm color
+Did you follow the 6 key principles under the human- centred design process that conforms to the ISO 9241-210 Standard?,1 Line down,1 Line down,,189confirm follow 6 principles
+"Can you give what phases did your human-centred design process go through? For example discovery, alpha, beta, go live?",1 Line down,1 Line down,,190rpovide phase of human-cnetred design
+Can you give what user demographics were defined at the outset of your product's development?,1 Line down,1 Line down,,191provide user demographics
+Can yo ugive what user research informed your user needs?,1 Line down,1 Line down,,192research informed user needs
+"Can you list each user need your product addresses, and the acceptance criteria for each need?",1 Line down,1 Line down,,193provide product addresses
+Can you give how many times were versions of your product tested with users?,1 Line down,1 Line down,,194provide times tested
+Was your product evaluated for usability and accessibility before release?,1 Line down,4 Lines down,,195confirm test of usability and accessibility
+"Throughout the evaluation of early versions and pre- release versions, can you give what changes were made to your product in light of the user feedback? ",1 Line down,1 Line down,,196provide user feedback
+"Post-release, can you giev how do you continue to collect feedback from users and make changes to your product based on this feedback?",1 Line down,1 Line down,,197provide post release
+Can you give what is your post-release schedule of improvements to your product?,1 Line down,1 Line down,,198provide schedule of improvement
+Is your product a native iOS or Android app?,1 Line down,2 Lines down,,199IOS or Android
+"Can you give what device OS accessibility features does your product use? For example VoiceOver (iOS), Dynamic Type (iOS), TalkBack (Android) or Select To Speak (Android)?",1 Line down,1 Line down,,200OS accessibility
+Is your product a progressive web app?,1 Line down,3 Lines down,,201confirm progressive web app
+"Does your product comply with the baseline checklist for progressive web apps, as defined by Google?",1 Line down,1 Line down,,202confirm comply with baseline
+Have you conducted accessibility testing on your progressive web app?,1 Line down,1 Line down,,203confirm accessibility testing
+Is your product a website?,1 Line down,8 Lines down,,204confirm website
+Is your website responsive? ,1 Line down,1 Line down,,205confirm responsive
+Does your website accessibility conform to WCAG 2.1 level AA?,1 Line down,1 Line down,,206confirm WCAG2.1
+Does your website provide text equivalents for every non- text element within the product?,1 Line down,1 Line down,,207provide text equivalence
+Have you conducted accessibility testing on your web service?,1 Line down,1 Line down,,208confirm testing on web
+"Can your product be used with keyboard-only control, and with assistive technologies, such as screen readers and screen magnifiers?",1 Line down,1 Line down,,209confirm keyboard-only control
+Does your website provide an accessibility statement?,1 Line down,2 Lines down,,210provide accessibility testing 
+"Does your organisation provide evidence of this testing, including outcomes and any planned further changes to improve accessibility?",1 Line down,1 Line down,,211provide evidence imporving accessbility
+Does your product expose any Application Programming Interfaces (APIs) or integration channels for other consumers?,1 Line down,2 Lines down,,212confirm expose API
+Does your API adhere to the Government Digital Services (GDS) Open API Best Practices?,1 Line down,1 Line down,,213API adhere to GDS
+Is your product capable of exporting data in a standard format?,1 Line down,1 Line down,,214capable in standard format
+Is your product a wearable or device or integrates with them?,1 Line down,2 Lines down,,215confirm wearable device
+Can you give evidence of how it complies with ISO/IEEE 11073 Personal Health Data (PHD) Standards?,1 Line down,1 Line down,,216provide evidence with ISO/IEEE
+Are the source code and any configuration items for your product version controlled with all changes audited?,1 Line down,1 Line down,,217confirm source code controlled with audited
+"Do you have accreditation to any industry wide testing standards such as ISO 9001, ISO 29119 etc?",1 Line down,1 Line down,,218confirm ISO 9001
+What testing accreditation(s) do you have or are in the process of acquiring (including completion dates)?,1 Line down,1 Line down,,219confirm testing accreditation
+Are all significant issues identified in all test phases resolved prior to release?,1 Line down,1 Line down,,220confirm issues in all tests
+Can you rollback to previous versions of your product?,1 Line down,2 Lines down,,221confirm rollback
+Can you provide a brief outline of your rollback process and provide documentation to support this.?,1 Line down,1 Line down,,222provide how rollback
+Do you proactively monitor running of systems and system components to automatically identify faults and technical issues?,1 Line down,1 Line down,,223confirm monitor running of system
+Do you have a documented roadmap for the future development of your product?,1 Line down,2 Lines down,,224confirm documented roadmap
+"Can you provide details of planned development, technical updates and potential release dates?",1 Line down,1 Line down,,225confirm details of development
+Do you have a documented roadmap for the future development of your product?,1 Line down,2 Lines down,,226confirm roadmap for future
+Can you provide details of how you will ensure the continued availability of your product?,1 Line down,1 Line down,,227provide ensure availibility 
+Do you have a plan for decommissioning your product?,1 Line down,4 Lines down,,228decommissioning
+Can you describe your processes for decommissioning your product and dealing with any retained identifiable data?,1 Line down,1 Line down,,229provide decommissioning
+Do you have a plan for dealing with any retained identifiable data in the event that an individual stops using your product? For example by uninstalling or unsubscribing?,1 Line down,1 Line down,,230provide identifiable data
+Can you describe your processes for dealing with any retained identifiable data in the event that an individual stops using your product?,1 Line down,1 Line down,,231provide retained identifiable
+Great! You’re all set! You can view suggested next steps by clicking on “Suggestions” in the navigation bar above.,The session has ended,The session has ended,,end

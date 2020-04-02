@@ -2,7 +2,7 @@ import csv
 import os
 import re
 import json
-from collections import deque
+from collections import deque, defaultdict
 from pathlib import Path
 
 import shutil
@@ -32,6 +32,9 @@ class CSVData:
 
     def csv_data(self, path):
         regex = re.compile(r"[^a-zA-Z0-9_-]")  # (a-z A-Z), digits (0-9), underscore (_), and hyphen (-)
+        row_number = 0
+        row_offset = 1
+        row_numbers_visited = set()
         with open(path, 'r') as csv_file:
             data = []
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -41,19 +44,75 @@ class CSVData:
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
-                row[QUESTION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
+                row[QUESTION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&’'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
                                        row[QUESTION])  # remove invalid chars
-                row[CLARIFICATION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
+                row[CLARIFICATION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&’'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
                                             row[CLARIFICATION])  # remove invalid chars
                 row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)  # replace invalid chars with a hyphen
                 if not row[IDENTIFIER]:
                     raise ValueError("Identifier field in CSV file cannot be left blank")
                 elif row[IDENTIFIER] in identifiers:
                     raise ValueError("Two or more identifiers in CSV file are equal. Identifiers must be unique.")
-
                 identifiers.add(row[IDENTIFIER])
+
                 data.append(row)
             return data
+            # res = self.format_data(data)
+            # print(res)
+            # return res
+
+    def format_data(self, data):
+        data_has_changed = True
+
+        def add_row(data, target_row_number, answer):
+            print(data[target_row_number])
+
+            row_number_to_append_at = int(data[target_row_number][answer]) + target_row_number
+            new_row = []
+            new_row.append(data[row_number_to_append_at][QUESTION])
+            new_row.append(data[row_number_to_append_at][YES])
+            new_row.append(data[row_number_to_append_at][NO])
+            new_row.append(data[row_number_to_append_at][CLARIFICATION])
+            new_row.append(data[row_number_to_append_at][IDENTIFIER])
+            # inc all row answers that lead to rows that are after the row to append at to counter the offset
+            for row_num in range(row_number_to_append_at + 1):
+                if row_num == target_row_number:
+                    data[target_row_number][answer] = str(int(data[target_row_number][answer]) + 1)
+                    continue
+                if data[row_num][YES].isdigit():
+                    if row_num + int(data[row_num][YES]) > row_number_to_append_at:
+                        data[row_num][YES] = str(int(data[row_num][YES]) + 1)
+                if data[row_num][NO].isdigit():
+                    if row_num + int(data[row_num][NO]) > row_number_to_append_at:
+                        data[row_num][NO] = str(int(data[row_num][NO]) + 1)
+
+            data.insert(row_number_to_append_at + 1, new_row)
+
+        while data_has_changed:
+            data_has_changed = False
+            row_numbers_visited = defaultdict(int)
+            row_offset = 1
+            row_number = 0
+            for data_row in data:
+                if data_row[YES].isdigit():
+                    # check if next row clashes
+                    next_row_number = int(data_row[YES]) + row_number
+                    row_numbers_visited[next_row_number] += 1  # add to visited count
+                    if row_numbers_visited[next_row_number] == 2:
+                        # has clash
+                        data_has_changed = True
+                        add_row(data, row_number, YES)
+                        break
+                if data_row[NO].isdigit() and data_row[NO] != data_row[YES]:
+                    # check if next row clashes
+                    next_row_number = int(data_row[NO]) + row_number
+                    row_numbers_visited[next_row_number] += 1  # add to visited count
+                    if row_numbers_visited[next_row_number] == 2:
+                        # has clash
+                        data_has_changed = True
+                        add_row(data, row_number, NO)
+                        break
+                row_number += 1
 
 
 class CreateIntentsData:
@@ -103,10 +162,6 @@ class CreateIntentsData:
 
                 curr_intent = self.intents.intent_json(queue_head, is_welcome_intent)
 
-                # if curr_intent["name"] in intent_index_map:
-                #     index_of_intent = intent_index_map[curr_intent["name"]]
-                #     self.result_yes_no[index_of_intent]["contexts"].append(queue_head["input_context"])
-                # else:
                 if is_welcome_intent:
                     self.result_yes_no.append("Welcome")
                 elif queue_head["curr_yes_or_no"] is None and queue_head["prev_yes_or_no"] is None:
@@ -125,6 +180,14 @@ class CreateIntentsData:
         self.result_yes_no.append(None)
         self.result_json_data.append(self.intents.clarification_intent)
         self.result_yes_no.append("Clarification")
+
+        intent_names_count = defaultdict(int)
+        for i in range(len(self.result_json_data)):
+            curr_intent_name = self.result_json_data[i]["name"]
+            intent_names_count[curr_intent_name] += 1
+            if intent_names_count[curr_intent_name] > 1:
+                self.result_json_data[i]["name"] = curr_intent_name + " " + str(intent_names_count[curr_intent_name])
+
 
     def handle_yes_no_fields(self, queue_head, answer):
         curr_row = self.csv_data[queue_head["index"]]
@@ -150,8 +213,10 @@ class CreateIntentsData:
             })
 
     def queue_head_hash(self, queue_head):
-        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head["prev_row"] is None else \
-            (queue_head["prev_row"][IDENTIFIER], queue_head["prev_row"][YES], queue_head["prev_row"][NO])
+        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head[
+                                                                              "input_context"] is None else tuple(
+            queue_head["input_context"]), None if queue_head["prev_row"] is None else \
+                   (queue_head["prev_row"][IDENTIFIER], queue_head["prev_row"][YES], queue_head["prev_row"][NO])
 
     def yes_no_is_empty(self, queue_head):
         curr_row = self.csv_data[queue_head["index"]]
@@ -188,14 +253,15 @@ class CreateChatbotFiles:
                   encoding="utf-8") as file:
             fallback_intent_index = len(self.intents_list) - 2
             json.dump(self.intents_list[fallback_intent_index], file, indent=2)
-
+        names = defaultdict(int)
         for index in range(len(self.intents_list)):
             curr_name = self.intents_list[index]["name"]
-            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}.json"), "w",
+            names[curr_name] += 1
+            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name+str(names[curr_name]) if names[curr_name] > 1 else curr_name}.json"), "w",
                       encoding="utf-8") as file:
                 json.dump(self.intents_list[index], file, indent=2)
 
-            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name}_usersays_en.json"), "w",
+            with open(os.path.join(self.chatbot_target_path, "intents", f"{curr_name+str(names[curr_name]) if names[curr_name] > 1 else curr_name}_usersays_en.json"), "w",
                       encoding="utf-8") as file:
                 if self.yes_or_no_list[index] == "Welcome":
                     json.dump(usersays.welcome_usersays_data, file, indent=2)
@@ -209,6 +275,8 @@ class CreateChatbotFiles:
                     json.dump([], file, indent=2)
                 elif self.yes_or_no_list[index] is not None:
                     raise RuntimeError("Error in internal code")
+        # for k, v in names.items():
+        #     print(k,v)
 
     def create_entity_files(self):
         entities = Entities()
