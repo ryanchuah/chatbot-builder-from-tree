@@ -32,7 +32,6 @@ class CSVData:
 
     def csv_data(self, path):
         regex = re.compile(r"[^a-zA-Z0-9_-]")  # (a-z A-Z), digits (0-9), underscore (_), and hyphen (-)
-
         with open(path, 'r') as csv_file:
             data = []
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -42,9 +41,10 @@ class CSVData:
             for row in csv_reader:
                 row[YES] = self.format_possible_offset(row[YES])
                 row[NO] = self.format_possible_offset(row[NO])
-                # if row[YES] == "1" and row[NO] == "1":
-                #     row[YES] = ""
-                #     row[NO] = ""
+                row[QUESTION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
+                                       row[QUESTION])  # remove invalid chars
+                row[CLARIFICATION] = re.sub(r"[\r|\n]|[^a-zA-Z0-9\s!\"#$%&'()*+,-./:;<=>?@\[\\\]^_`{|}~]", "",
+                                            row[CLARIFICATION])  # remove invalid chars
                 row[IDENTIFIER] = self.format_identifier(row[IDENTIFIER], regex)  # replace invalid chars with a hyphen
                 if not row[IDENTIFIER]:
                     raise ValueError("Identifier field in CSV file cannot be left blank")
