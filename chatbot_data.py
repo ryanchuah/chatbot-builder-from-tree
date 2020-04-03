@@ -976,17 +976,9 @@ class AgentAPI:
         if True or is_welcome_intent:
             result += \
                 """
-                    // reset contexts
                     const requestContexts = request.body.queryResult.outputContexts;
                     const mostRecentContextNames = getRecentContextNames(requestContexts);
-                    for (const ctx of requestContexts) {
-                        const words = ctx.name.split("/");
-
-                        const context = words[words.length - 1];
-                        if (!mostRecentContextNames.has(context)) {
-                            agent.context.set({ name: context, lifespan: "0" });
-                        }
-                    }
+                    removeOldContexts(agent, requestContexts, mostRecentContextNames)
                 """
 
         result += f"{agent_add_definition}"
@@ -1063,6 +1055,17 @@ class AgentAPI:
                     }
                     return mostRecent;
                 }
+                
+                function removeOldContexts(agent, requestContexts, mostRecentContextNames){
+                    for (const ctx of requestContexts) {
+                        const words = ctx.name.split("/");
+            
+                        const context = words[words.length - 1];
+                        if (!mostRecentContextNames.has(context)) {
+                            agent.context.set({ name: context, lifespan: "0" });
+                        }
+                    }
+                }
     
             """
         code += self.handler_function(intents_list[0], True)
@@ -1086,13 +1089,9 @@ class AgentAPI:
             """
                     const requestContexts = request.body.queryResult.outputContexts;
                     const mostRecentContext = getMostRecentContext(requestContexts);
-        
-                const words = mostRecentContext.name.split("/");
-            
-                    const context = words[words.length - 1];
-            
-                    if (clarificationMap.has(context)) {
-                        var responseText = clarificationMap.get(context);
+
+                    if (clarificationMap.has(mostRecentContext)) {
+                        var responseText = clarificationMap.get(mostRecentContext);
                     } else {
                         var responseText = "No clarification is available";
                     }
