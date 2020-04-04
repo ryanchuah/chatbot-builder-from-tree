@@ -210,7 +210,7 @@ class CreateIntentsData:
             })
 
     def queue_head_hash(self, queue_head):
-        return queue_head["index"], queue_head["curr_yes_or_no"], None if queue_head[
+        return queue_head["index"], queue_head["curr_yes_or_no"], queue_head["prev_yes_or_no"], None if queue_head[
                                                                               "input_context"] is None else tuple(
             queue_head["input_context"]), None if queue_head["prev_row"] is None else \
                    (queue_head["prev_row"][IDENTIFIER], queue_head["prev_row"][YES], queue_head["prev_row"][NO])
