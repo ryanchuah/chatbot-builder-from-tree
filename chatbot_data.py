@@ -211,7 +211,7 @@ class Intents:
             "responses": [{
                 "resetContexts": False,
                 "affectedContexts": output_context,
-                "parameters": parameters,
+                "parameters": [],
                 "messages": [
                     {
                         "type": 0,
@@ -255,7 +255,8 @@ class Entities:
                 "yeah",
                 "that is correct",
                 "correct",
-                "yup"
+                "yup",
+                "i think so"
             ]
         },
         {
@@ -264,9 +265,10 @@ class Entities:
                 "no",
                 "nope",
                 "incorrect",
-                "that\u0027s not correct",
-                "that\u0027s not right",
-                "thats not right"
+                "not correct",
+                "not right",
+                "not right",
+                "don't think so",
             ]
         }
     ]
@@ -274,218 +276,103 @@ class Entities:
 
 class Usersays:
     yes_usersays_data = [
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "yes that is correct",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "that is correct",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "they do",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "does",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "it does",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "yup",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "y",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": True
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "right",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "yes it does",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "yes",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": True
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        }
-    ]
+        {"id": str(uuid4()), "data": [{"text": "yes", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yup", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "i think so", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yes it does", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "as far as I know", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yah", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "I can", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it can", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "of course", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "thankfully yes", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "sure", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "certainly", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "thats possible", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yes i do", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it does", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it may", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "I do", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yes it does", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yes it can", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "absolutely", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "indeed", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "affirmative", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yep", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "yea", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0}]
 
     no_usersays_data = [
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "it does not",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "nop",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "not right",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "not",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        },
-        {
-            "id": str(uuid4()),
-            "data": [
-                {
-                    "text": "no",
-                    "alias": "confirmation",
-                    "meta": "@confirmation",
-                    "userDefined": False
-                }
-            ],
-            "isTemplate": False,
-            "count": 0,
-            "updated": 0
-        }
-    ]
+        {"id": str(uuid4()), "data": [{"text": "no", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "nope", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "i dont think so", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no it doesn't", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "not that I know of", "userDefined": False}],
+         "isTemplate": False, "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "noh", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "I can't", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it cannot", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "i cant", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "I cannot", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "not now", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "nah", "userDefined": False}], "isTemplate": False, "count": 0,
+         "updated": 0}, {"id": str(uuid4()), "data": [{"text": "unfortunately not", "userDefined": False}],
+                         "isTemplate": False, "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no, sorry", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no can do", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "thats not possible", "userDefined": False}],
+         "isTemplate": False, "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no i dont", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no I don't", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it does not", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "it may not", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "I do not", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no it does not", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no it cant", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0},
+        {"id": str(uuid4()), "data": [{"text": "no it cannot", "userDefined": False}], "isTemplate": False,
+         "count": 0, "updated": 0}]
 
     welcome_usersays_data = [
         {
@@ -985,14 +872,11 @@ class AgentAPI:
         result += f"}}{os.linesep}"
         return result
 
-
     def intent_map(self, intent):
         return f'intentMap.set("{intent["name"]}", handle{intent["name"].replace(" ", "").replace("-", "")});{os.linesep}'
 
-
     def clarification_map(self, output_context, clarification_text):
         return f'clarificationMap.set("{output_context["name"]}", "{clarification_text}");{os.linesep}'
-
 
     def agent_code(self, intents_list):
         code = \

@@ -32,9 +32,6 @@ class CSVData:
 
     def csv_data(self, path):
         regex = re.compile(r"[^a-zA-Z0-9_-]")  # (a-z A-Z), digits (0-9), underscore (_), and hyphen (-)
-        row_number = 0
-        row_offset = 1
-        row_numbers_visited = set()
         with open(path, 'r') as csv_file:
             data = []
             csv_reader = csv.reader(csv_file, delimiter=',')
@@ -283,13 +280,13 @@ class CreateChatbotFiles:
 
         Path(os.path.join(self.chatbot_target_path, "entities")).mkdir(parents=True, exist_ok=True)
 
-        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation.json"), "w",
-                  encoding="utf-8") as file:
-            json.dump(entities.confirmation_entity, file, indent=2)
-
-        with open(os.path.join(self.chatbot_target_path, "entities", "confirmation_entries_en.json"), "w",
-                  encoding="utf-8") as file:
-            json.dump(entities.confirmation_entries, file, indent=2)
+        # with open(os.path.join(self.chatbot_target_path, "entities", "confirmation.json"), "w",
+        #           encoding="utf-8") as file:
+        #     json.dump(entities.confirmation_entity, file, indent=2)
+        #
+        # with open(os.path.join(self.chatbot_target_path, "entities", "confirmation_entries_en.json"), "w",
+        #           encoding="utf-8") as file:
+        #     json.dump(entities.confirmation_entries, file, indent=2)
 
     def create_agent_file(self):
         agent = Agent(WEBHOOK_USED)
